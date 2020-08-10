@@ -1,15 +1,28 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 import fetch from "isomorphic-unfetch";
 import { motion } from "framer-motion";
+import { useRouter } from "next/router";
 
 const Index = (props) => {
+  const [keywords, setKeywords] = useState("");
   const searchLabelRef = useRef(null);
-  const onInputBlur = () => {
+  const router = useRouter();
+
+  const onInputBlur = (e) => {
     searchLabelRef.current.classList.remove("active");
   };
+
   const onInputClick = () => {
     searchLabelRef.current.classList.add("active");
+  };
+
+  const onInputChange = (e) => {
+    setKeywords(e.target.value);
+  };
+
+  const onInputFocus = (e) => {
+    setKeywords("");
   };
 
   return (
@@ -20,15 +33,27 @@ const Index = (props) => {
       key={"sdff"}
       className="home"
     >
-      <label class="search-label" for="search_input" ref={searchLabelRef}>
+      <label className="search-label" for="search_input" ref={searchLabelRef}>
         <input
           id="search_input"
           name="keywords"
           type="text"
+          autoComplete="off"
+          spellCheck={false}
+          value={keywords}
+          onChange={onInputChange}
           onClick={onInputClick}
           onBlur={onInputBlur}
+          onFocus={onInputFocus}
         />
       </label>
+      <button
+        onClick={() =>
+          router.push({ pathname: "/results", query: { keywords: keywords } })
+        }
+      >
+        Test
+      </button>
     </motion.div>
   );
 };
