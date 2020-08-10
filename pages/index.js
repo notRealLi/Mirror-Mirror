@@ -25,7 +25,7 @@ const Index = (props) => {
     setKeywords("");
   };
 
-  const onInputEnter = (e) => {
+  const onInputKeyDown = (e) => {
     if (e.keyCode === 13 && keywords !== "") {
       router.push({ pathname: "/results", query: { keywords: keywords } });
     }
@@ -55,7 +55,7 @@ const Index = (props) => {
           onClick={onInputClick}
           onBlur={onInputBlur}
           onFocus={onInputFocus}
-          onKeyDown={onInputEnter}
+          onKeyDown={onInputKeyDown}
         />
       </label>
       <button
