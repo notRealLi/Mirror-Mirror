@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "next/link";
 
 const Header = () => {
   return (
@@ -7,7 +6,7 @@ const Header = () => {
       <div className="flex">
         <div className="logo">
           <a href="/">
-            <a>Mirror rorriM</a>
+            <a>M I R R O R</a>
           </a>
         </div>
         <div className="nav-toggle">

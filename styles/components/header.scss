@@ -6,7 +6,11 @@
   width: 100%;
   height: 10vh;
   z-index: 5;
-  padding: 2rem 6rem;
+  padding: 3rem 6rem;
+
+  @include media("<=525px") {
+    padding: 3rem 3rem;
+  }
 
   .flex {
     height: 5vh;
@@ -15,6 +19,7 @@
 
     .logo {
       a {
+        font-size: 2rem;
         text-decoration: none;
         color: $gold;
       }
