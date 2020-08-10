@@ -33,7 +33,11 @@ const Index = (props) => {
       key={"sdff"}
       className="home"
     >
-      <label className="search-label" for="search_input" ref={searchLabelRef}>
+      <label
+        className="search-label"
+        htmlFor="search_input"
+        ref={searchLabelRef}
+      >
         <input
           id="search_input"
           name="keywords"
