@@ -63,7 +63,7 @@ const Index = (props) => {
           router.push({ pathname: "/results", query: { keywords: keywords } })
         }
       >
-        Test
+        Tweets
       </button>
     </motion.div>
   );
