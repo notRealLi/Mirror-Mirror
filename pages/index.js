@@ -72,7 +72,7 @@ const Index = (props) => {
           outline: none;
           color: transparent;
           text-align: center;
-          transition-delay: $delay;
+          transition-delay: 0.8s;
         }
       `}</style>
       <button onClick={showResults}>Tweets</button>
