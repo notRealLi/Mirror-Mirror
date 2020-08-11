@@ -75,7 +75,11 @@ const Results = (props) => {
             animate={{ opacity: 1 }}
             key={tweetIndex}
           >
-            {tweetIndex >= 0 ? data[tweetIndex] : data[0]}
+            {data.length > 0
+              ? tweetIndex >= 0
+                ? data[tweetIndex]
+                : data[0]
+              : "No tweets found"}
           </motion.p>
         </AnimatePresence>
       </motion.div>
