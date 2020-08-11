@@ -2,6 +2,7 @@ import React from "react";
 import fetch from "isomorphic-unfetch";
 import { withRouter } from "next/router";
 import useSWR from "swr";
+import { motion, AnimatePresence } from "framer-motion";
 
 async function fetcher(url) {
   const res = await fetch(url);
@@ -12,14 +13,52 @@ async function fetcher(url) {
 
 const Results = (props) => {
   const { data, error } = useSWR(
-    `http://127.0.0.1:5000/tweets/search?keywords=${props.router.query.keywords}`,
+    `https://magic-well.herokuapp.com/tweets/search?keywords=${props.router.query.keywords}`,
     fetcher
   );
 
-  if (error) return <div className="results">failed to load</div>;
-  if (!data) return <div className="results">loading...</div>;
+  if (error)
+    return (
+      <AnimatePresence exitBeforeEnter>
+        <motion.div
+          className="results"
+          exit={{ opacity: 0 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          key="error"
+        >
+          failed to load
+        </motion.div>
+      </AnimatePresence>
+    );
+  if (!data)
+    return (
+      <AnimatePresence exitBeforeEnter>
+        <motion.div
+          className="results"
+          exit={{ opacity: 0 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          key="loading"
+        >
+          loading...
+        </motion.div>
+      </AnimatePresence>
+    );
 
-  return <div className="results">{data[0]}</div>;
+  return (
+    <AnimatePresence exitBeforeEnter>
+      <motion.div
+        className="results"
+        exit={{ opacity: 0 }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        key="success"
+      >
+        {data[0]}
+      </motion.div>
+    </AnimatePresence>
+  );
 };
 
 export default withRouter(Results);
