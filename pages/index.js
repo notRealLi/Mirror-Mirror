@@ -9,6 +9,11 @@ const Index = (props) => {
   const searchLabelRef = useRef(null);
   const router = useRouter();
 
+  const showResults = () => {
+    if (keywords !== "")
+      router.push({ pathname: "/results", query: { keywords } });
+  };
+
   const onInputBlur = (e) => {
     searchLabelRef.current.classList.remove("active");
   };
@@ -26,8 +31,9 @@ const Index = (props) => {
   };
 
   const onInputKeyDown = (e) => {
-    if (e.keyCode === 13 && keywords !== "") {
-      router.push({ pathname: "/results", query: { keywords: keywords } });
+    // ENTER
+    if (e.keyCode === 13) {
+      showResults();
     }
   };
 
@@ -58,13 +64,7 @@ const Index = (props) => {
           onKeyDown={onInputKeyDown}
         />
       </label>
-      <button
-        onClick={() =>
-          router.push({ pathname: "/results", query: { keywords: keywords } })
-        }
-      >
-        Tweets
-      </button>
+      <button onClick={showResults}>Tweets</button>
     </motion.div>
   );
 };
