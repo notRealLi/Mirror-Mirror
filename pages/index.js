@@ -1,5 +1,4 @@
 import { useRef, useState } from "react";
-import Link from "next/link";
 import fetch from "isomorphic-unfetch";
 import { motion } from "framer-motion";
 import { useRouter } from "next/router";
@@ -50,7 +49,7 @@ const Index = (props) => {
         htmlFor="search_input"
         ref={searchLabelRef}
       >
-        <motion.input
+        <input
           id="search_input"
           name="keywords"
           type="text"
@@ -62,14 +61,6 @@ const Index = (props) => {
           onBlur={onInputBlur}
           onFocus={onInputFocus}
           onKeyDown={onInputKeyDown}
-          initial={{ opacity: 0 }}
-          animate={{
-            opacity: 1,
-            transition: {
-              duration: 1,
-              ease: [0.6, 0.05, -0.01, 0.9],
-            },
-          }}
         />
       </label>
       <button onClick={showResults}>Tweets</button>
