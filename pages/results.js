@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import fetch from "isomorphic-unfetch";
 import { withRouter } from "next/router";
 import useSWR from "swr";
@@ -16,6 +16,18 @@ const Results = (props) => {
     `https://magic-well.herokuapp.com/tweets/search?keywords=${props.router.query.keywords}`,
     fetcher
   );
+
+  const [tweetIndex, setTweetIndex] = useState(0);
+
+  useEffect(() => {
+    if (data && data.length > 0) {
+      const changeTweet = setInterval(() => {
+        setTweetIndex((tweetIndex) => (tweetIndex + 1) % data.length);
+      }, 5000);
+
+      return () => clearInterval(changeTweet);
+    }
+  });
 
   if (error)
     return (
@@ -55,7 +67,17 @@ const Results = (props) => {
         animate={{ opacity: 1 }}
         key="success"
       >
-        {data[0]}
+        <AnimatePresence exitBeforeEnter>
+          <motion.p
+            className="results"
+            exit={{ opacity: 0 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            key={tweetIndex}
+          >
+            {tweetIndex >= 0 ? data[tweetIndex] : data[0]}
+          </motion.p>
+        </AnimatePresence>
       </motion.div>
     </AnimatePresence>
   );
