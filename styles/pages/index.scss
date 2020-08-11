@@ -64,6 +64,14 @@ $delay: 0.8s;
   }
 
   button {
+    display: absolute;
     margin-top: 1rem;
+    cursor: pointer;
+    transition: all 150ms ease;
+
+    &:disabled {
+      opacity: 0;
+      cursor: auto;
+    }
   }
 }

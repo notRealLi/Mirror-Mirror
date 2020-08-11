@@ -63,7 +63,9 @@ const Index = (props) => {
           onKeyDown={onInputKeyDown}
         />
       </label>
-      <button onClick={showResults}>Tweets</button>
+      <button onClick={showResults} disabled={keywords === ""}>
+        Tweets
+      </button>
     </motion.div>
   );
 };
