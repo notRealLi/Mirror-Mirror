@@ -19,7 +19,7 @@ $delay: 0.8s;
     cursor: text;
     margin: 0px 8px 7px 0px;
     padding: 7px 9px 0px 9px;
-    transition-delay: $delay;
+    // transition-delay: $delay;
 
     &:after {
       content: "";
@@ -32,7 +32,7 @@ $delay: 0.8s;
       border-radius: 3px;
       transform: rotate(-45deg);
       transition: all 100ms ease;
-      transition-delay: $delay;
+      // transition-delay: $delay;
     }
 
     &.active {
