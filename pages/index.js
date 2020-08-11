@@ -62,19 +62,19 @@ const Index = (props) => {
           onFocus={onInputFocus}
           onKeyDown={onInputKeyDown}
         />
+        <style jsx>{`
+          input {
+            width: 100%;
+            border: none;
+            font-size: 1.5rem;
+            background: transparent;
+            outline: none;
+            color: transparent;
+            text-align: center;
+            transition-delay: 0.8s;
+          }
+        `}</style>
       </label>
-      <style jsx>{`
-        input {
-          width: 100%;
-          border: none;
-          font-size: 1.5rem;
-          background: transparent;
-          outline: none;
-          color: transparent;
-          text-align: center;
-          transition-delay: 0.8s;
-        }
-      `}</style>
       <button onClick={showResults}>Tweets</button>
     </motion.div>
   );
