@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import "../styles/globals.scss";
 import { motion, AnimatePresence } from "framer-motion";
 import Header from "../components/header";
+import Background from "../components/background";
 
 const MyApp = ({ Component, pageProps, router }) => {
   const [loading, setLoading] = useState(false);
@@ -35,6 +36,7 @@ const MyApp = ({ Component, pageProps, router }) => {
   return (
     <>
       <Header />
+      <Background />
       <AnimatePresence exitBeforeEnter>
         {loading || error ? (
           <motion.div
