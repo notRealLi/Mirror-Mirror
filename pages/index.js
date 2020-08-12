@@ -53,7 +53,7 @@ const Index = () => {
           name="keywords"
           type="text"
           autoComplete="off"
-          placeholder='e.g. "Organic Food at Canada"'
+          placeholder='e.g. "Organic Food, Canada"'
           spellCheck={false}
           value={keywords}
           onChange={onInputChange}
