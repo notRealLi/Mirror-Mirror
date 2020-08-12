@@ -10,17 +10,14 @@ const MyApp = ({ Component, pageProps, router }) => {
 
   useEffect(() => {
     const routingStart = () => {
-      console.log("start");
       setLoading(true);
     };
 
     const routingEnd = () => {
-      console.log("end");
       setLoading(false);
     };
 
     const routingError = () => {
-      console.log("error");
       setError(true);
     };
 
@@ -47,7 +44,7 @@ const MyApp = ({ Component, pageProps, router }) => {
             animate={{ opacity: 1 }}
             key="error"
           >
-            failed to load
+            Server Error
           </motion.div>
         </AnimatePresence>
       </>
