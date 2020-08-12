@@ -34,7 +34,8 @@ body {
   text-align: center;
 
   p {
-    display: block;
+    word-break: break-all;
+    white-space: normal;
     width: 80%;
   }
 }
