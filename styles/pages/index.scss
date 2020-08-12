@@ -94,6 +94,7 @@ $delay: 0.8s;
     span {
       font-family: "Sacramento", cursive;
       font-size: 1.9rem;
+      font-weight: 600;
       text-align: center;
       background: $gold;
       background-clip: text;
@@ -107,7 +108,7 @@ $delay: 0.8s;
 
     &:disabled {
       opacity: 0;
-      cursor: auto;
+      cursor: default;
     }
 
     &:focus {
