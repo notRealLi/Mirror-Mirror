@@ -32,50 +32,24 @@ const MyApp = ({ Component, pageProps, router }) => {
     };
   }, []);
 
-  if (error) {
-    return (
-      <>
-        <Header />
-        <AnimatePresence exitBeforeEnter>
+  return (
+    <>
+      <Header />
+      <AnimatePresence exitBeforeEnter>
+        {loading || error ? (
           <motion.div
             className="loading-and-error"
             exit={{ opacity: 0 }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            key="error"
+            key="loading"
           >
-            <p>Server Error</p>
+            <p>{loading ? "Loading..." : "Server Error"}</p>
           </motion.div>
-        </AnimatePresence>
-      </>
-    );
-  }
-
-  return (
-    <>
-      {loading ? (
-        <>
-          <Header />
-          <AnimatePresence exitBeforeEnter>
-            <motion.div
-              className="loading-and-error"
-              exit={{ opacity: 0 }}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              key="loading"
-            >
-              <p>Loading...</p>
-            </motion.div>
-          </AnimatePresence>
-        </>
-      ) : (
-        <>
-          <Header />
-          <AnimatePresence exitBeforeEnter>
-            <Component {...pageProps} key={router.route} />
-          </AnimatePresence>
-        </>
-      )}
+        ) : (
+          <Component {...pageProps} key={router.route} />
+        )}
+      </AnimatePresence>
     </>
   );
 };
