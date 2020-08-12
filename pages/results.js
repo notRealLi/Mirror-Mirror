@@ -61,8 +61,9 @@ export const getServerSideProps = async function ({ query }) {
   const topic = witAiJson.entities["topic:topic"]
     .map((topic) => topic.value)
     .join(" ");
-  const location =
-    witAiJson.entities["wit$location:location"][0].resolved.values[0].name;
+  const location = witAiJson.entities["wit$location:location"]
+    ? witAiJson.entities["wit$location:location"][0].resolved.values[0].name
+    : "N/A";
 
   // calling Magic Well api
   const magicWellQueryUrl = `https://magic-well.herokuapp.com/tweets/search?keywords=${topic}&location=${location}`;
