@@ -44,7 +44,7 @@ const MyApp = ({ Component, pageProps, router }) => {
             animate={{ opacity: 1 }}
             key="error"
           >
-            Server Error
+            <p>Server Error</p>
           </motion.div>
         </AnimatePresence>
       </>
@@ -64,7 +64,7 @@ const MyApp = ({ Component, pageProps, router }) => {
               animate={{ opacity: 1 }}
               key="loading"
             >
-              loading...
+              <p>Loading...</p>
             </motion.div>
           </AnimatePresence>
         </>

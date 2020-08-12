@@ -31,8 +31,10 @@ body {
   justify-content: center;
   align-items: center;
   color: $white;
+  text-align: center;
 
   p {
+    display: block;
     width: 80%;
   }
 }
