@@ -46,6 +46,13 @@ $delay: 0.8s;
       width: 25rem;
       margin-right: 0px;
 
+      input {
+        &::placeholder {
+          font-size: 1.3rem;
+          color: #757575;
+        }
+      }
+
       &:after {
         height: 0px;
       }
@@ -60,6 +67,11 @@ $delay: 0.8s;
       color: transparent;
       text-align: center;
       // transition-delay: $delay;
+
+      &::placeholder {
+        color: transparent;
+        transition: all 200ms ease;
+      }
     }
   }
 
