@@ -4,6 +4,7 @@ import { withRouter } from "next/router";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Results = (props) => {
+  console.log(props.wit);
   const [tweetIndex, setTweetIndex] = useState(0);
 
   useEffect(() => {
@@ -46,14 +47,33 @@ const Results = (props) => {
 };
 
 export const getServerSideProps = async function ({ query }) {
-  const keywords = query.keywords;
-  const magicWellQueryUrl = `https://magic-well.herokuapp.com/tweets/search?keywords=${keywords}`;
+  // calling Wit.ai api
+  const tokens = query.keywords.split(",");
+  tokens[0] = `"${tokens[0]}"`;
+  const utterance = tokens.join(",");
+  const witAiQueryUrl = `https://api.wit.ai/message?v=20200811&q=${utterance}`;
+  const witAiRes = await fetch(witAiQueryUrl, {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer TFCWCET22RBPVMGKJQ3YDPXIWAAISCJB",
+    },
+  });
+  const witAiJson = await witAiRes.json();
+  const topic = witAiJson.entities["topic:topic"]
+    .map((topic) => topic.value)
+    .join(" ");
+  const location =
+    witAiJson.entities["wit$location:location"][0].resolved.values[0].name;
+
+  // calling Magic Well api
+  const magicWellQueryUrl = `https://magic-well.herokuapp.com/tweets/search?keywords=${topic}&location=${location}`;
   const res = await fetch(magicWellQueryUrl);
   const json = await res.json();
 
   return {
     props: {
       keywords: json,
+      wit: { topic, location },
     },
   };
 };
