@@ -58,9 +58,14 @@ export const getServerSideProps = async function ({ query }) {
     },
   });
   const witAiJson = await witAiRes.json();
-  const topic = witAiJson.entities["topic:topic"]
-    .map((topic) => topic.value)
-    .join(" ");
+  let topic;
+  if (witAiJson.entities["topic:topic"]) {
+    topic = witAiJson.entities["topic:topic"]
+      .map((topic) => topic.value)
+      .join(" ");
+  } else {
+    topic = query.keywords;
+  }
   const location = witAiJson.entities["wit$location:location"]
     ? witAiJson.entities["wit$location:location"][0].resolved.values[0].name
     : "N/A";
