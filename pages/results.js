@@ -4,7 +4,6 @@ import { withRouter } from "next/router";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Results = (props) => {
-  console.log(props.wit);
   const [tweetIndex, setTweetIndex] = useState(0);
 
   useEffect(() => {
