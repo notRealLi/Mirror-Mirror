@@ -46,6 +46,10 @@ $delay: 0.8s;
       width: 25rem;
       margin-right: 0px;
 
+      @include media("<=500px") {
+        width: 20rem;
+      }
+
       input {
         &::placeholder {
           font-size: 1.3rem;
