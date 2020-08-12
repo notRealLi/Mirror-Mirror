@@ -21,6 +21,15 @@ $delay: 0.8s;
     padding: 7px 9px 0px 9px;
     // transition-delay: $delay;
 
+    img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 50px;
+      height: 50px;
+      transition: all 100ms ease;
+    }
+
     &:after {
       content: "";
       position: absolute;
@@ -59,6 +68,10 @@ $delay: 0.8s;
 
       &:after {
         height: 0px;
+      }
+
+      img {
+        transform: scale(0);
       }
     }
 

@@ -48,6 +48,7 @@ const Index = () => {
         htmlFor="search_input"
         ref={searchLabelRef}
       >
+        <img src="/glare.svg" alt="" />
         <input
           id="search_input"
           name="keywords"
