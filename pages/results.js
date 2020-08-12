@@ -3,13 +3,13 @@ import fetch from "isomorphic-unfetch";
 import { withRouter } from "next/router";
 import { motion, AnimatePresence } from "framer-motion";
 
-const Results = (props) => {
+const Results = ({ tweets }) => {
   const [tweetIndex, setTweetIndex] = useState(0);
 
   useEffect(() => {
-    if (props.keywords && props.keywords.length > 0) {
+    if (tweets && tweets.length > 0) {
       const changeTweet = setInterval(() => {
-        setTweetIndex((tweetIndex) => (tweetIndex + 1) % props.keywords.length);
+        setTweetIndex((tweetIndex) => (tweetIndex + 1) % tweets.length);
       }, 5000);
 
       return () => clearInterval(changeTweet);
@@ -33,10 +33,10 @@ const Results = (props) => {
             animate={{ opacity: 1 }}
             key={tweetIndex}
           >
-            {props.keywords.length > 0
+            {tweets && tweets.length > 0
               ? tweetIndex >= 0
-                ? props.keywords[tweetIndex]
-                : props.keywords[0]
+                ? tweets[tweetIndex]
+                : tweets[0]
               : "No tweets found"}
           </motion.p>
         </AnimatePresence>
@@ -72,13 +72,12 @@ export const getServerSideProps = async function ({ query }) {
 
   // calling Magic Well api
   const magicWellQueryUrl = `https://magic-well.herokuapp.com/tweets/search?keywords=${topic}&location=${location}`;
-  const res = await fetch(magicWellQueryUrl);
-  const json = await res.json();
+  const magicWellRes = await fetch(magicWellQueryUrl);
+  const magicWellJson = await magicWellRes.json();
 
   return {
     props: {
-      keywords: json,
-      wit: { topic, location },
+      tweets: magicWellJson,
     },
   };
 };
