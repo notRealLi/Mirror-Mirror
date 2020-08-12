@@ -1,9 +1,8 @@
 import { useRef, useState } from "react";
-import fetch from "isomorphic-unfetch";
 import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 
-const Index = (props) => {
+const Index = () => {
   const [keywords, setKeywords] = useState("");
   const searchLabelRef = useRef(null);
   const router = useRouter();
@@ -64,24 +63,10 @@ const Index = (props) => {
         />
       </label>
       <button onClick={showResults} disabled={keywords === ""}>
-        Tweets
+        <span>Show</span>
       </button>
     </motion.div>
   );
-};
-
-export const getStaticProps = async function () {
-  const res = await fetch(
-    "https://my-json-server.typicode.com/wrongakram/demo/products"
-  );
-
-  const data = await res.json();
-
-  return {
-    props: {
-      products: data,
-    },
-  };
 };
 
 export default Index;
