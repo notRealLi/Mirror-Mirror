@@ -121,6 +121,10 @@ $delay: 0.8s;
     &:disabled {
       opacity: 0;
       cursor: default;
+
+      img {
+        opacity: 0;
+      }
     }
 
     &:focus {
