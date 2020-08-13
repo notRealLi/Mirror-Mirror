@@ -25,6 +25,11 @@
         text-decoration: none;
         color: $gold;
         text-shadow: 10px 10px $gold-shadow;
+
+        &:focus {
+          -webkit-tap-highlight-color: transparent;
+          // TODO: add effect
+        }
       }
     }
 

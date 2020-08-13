@@ -125,6 +125,7 @@ $delay: 0.8s;
 
     &:focus {
       outline: none;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }
   }
 }
