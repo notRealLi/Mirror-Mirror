@@ -4,3 +4,17 @@ $gold: #e28413;
 $gold-shadow: #634b2e;
 $white: #ffffff;
 $gray: #f1f3f5;
+
+@keyframes float {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-15px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
