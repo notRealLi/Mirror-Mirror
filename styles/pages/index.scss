@@ -96,7 +96,9 @@ $delay: 0.8s;
   }
 
   button {
-    display: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin-top: 1.5rem;
     cursor: pointer;
     box-shadow: 0px 0px 15px $gold;
@@ -107,15 +109,9 @@ $delay: 0.8s;
     border: none;
     transition: all 150ms ease;
 
-    span {
-      font-family: "Sacramento", cursive;
-      font-size: 1.9rem;
-      font-weight: 600;
-      text-align: center;
-      background: $gold;
-      background-clip: text;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+    img {
+      width: 80px;
+      height: 80px;
     }
 
     &:hover {

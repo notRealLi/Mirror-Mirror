@@ -65,7 +65,7 @@ const Index = () => {
         />
       </label>
       <button onClick={showResults} disabled={keywords === ""}>
-        <span>Show</span>
+        <img src="/eye.svg" alt="" />
       </button>
     </motion.div>
   );
