@@ -1,13 +1,10 @@
 import React, { useState } from "react";
 import Particles from "react-particles-js";
 import { motion, AnimatePresence } from "framer-motion";
+import { useGlobalStateContext } from "../context/globalContext";
 
 const Background = () => {
-  const colorGold = "#e28413";
-  const colorGreen = "#86e7b8";
-  const colorRed = "#de3c4b";
-
-  const [color, setColor] = useState(colorGold);
+  const { particlesColor } = useGlobalStateContext();
 
   return (
     <div className="background">
@@ -30,7 +27,7 @@ const Background = () => {
                   },
                 },
                 color: {
-                  value: color,
+                  value: particlesColor,
                 },
                 shape: {
                   type: "circle",
