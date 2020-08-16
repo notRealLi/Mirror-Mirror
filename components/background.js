@@ -3,11 +3,11 @@ import Particles from "react-particles-js";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Background = () => {
-  // const colorGold = "#e28413";
-  // const colorGreen = "#86e7b8";
-  // const colorRed = "#de3c4b";
+  const colorGold = "#e28413";
+  const colorGreen = "#86e7b8";
+  const colorRed = "#de3c4b";
 
-  const [color, setColor] = useState(colorRed);
+  const [color, setColor] = useState(colorGold);
 
   return (
     <div className="background">
