@@ -4,6 +4,7 @@ import "../styles/globals.scss";
 import { motion, AnimatePresence } from "framer-motion";
 import Header from "../components/header";
 import Background from "../components/background";
+import { GlobalProvider } from "../context/globalContext";
 
 const MyApp = ({ Component, pageProps, router }) => {
   const [loading, setLoading] = useState(false);
@@ -34,7 +35,7 @@ const MyApp = ({ Component, pageProps, router }) => {
   }, []);
 
   return (
-    <>
+    <GlobalProvider>
       <Header />
       <Background />
       <AnimatePresence exitBeforeEnter>
@@ -52,7 +53,7 @@ const MyApp = ({ Component, pageProps, router }) => {
           <Component {...pageProps} key={router.route} />
         )}
       </AnimatePresence>
-    </>
+    </GlobalProvider>
   );
 };
 
