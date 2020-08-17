@@ -122,7 +122,7 @@ const Results = ({ tweets, test }) => {
 
 export const getServerSideProps = async function ({ query }) {
   // calling Wit.ai api
-  const test = process.env.GCP_PRIVATE_KEY;
+  const test = process.env.GCP_PRIVATE_KEY.replace(/\\n/g, "\n");
 
   const tokens = query.keywords.split(",");
   tokens[0] = `"${tokens[0]}"`;
