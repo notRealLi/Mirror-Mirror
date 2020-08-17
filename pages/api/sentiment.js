@@ -2,14 +2,14 @@ import { google } from "googleapis";
 
 export default async (req, res) => {
   try {
-    console.log(`${process.env.GCP_CLIENT_EMAIL}`);
     const content = req.query.tweet;
-
+    const gcpClientEmail = process.env.GCP_CLIENT_EMAIL;
+    const gcpPrivateKey = process.env.GCP_PRIVATE_KEY.replace(/\\n/g, "\n");
     // getting gcp access token
     const googleJWTClient = new google.auth.JWT(
-      process.env.GCP_CLIENT_EMAIL,
+      gcpClientEmail,
       null,
-      process.env.GCP_PRIVATE_KEY.replace(/\\n/g, "\n"),
+      gcpPrivateKey,
       [
         "https://www.googleapis.com/auth/cloud-language",
         "https://www.googleapis.com/auth/cloud-platform",
