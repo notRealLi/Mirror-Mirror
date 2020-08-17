@@ -118,6 +118,8 @@ const Results = ({ tweets }) => {
 };
 
 export const getServerSideProps = async function ({ query }) {
+  console.log(process.env.DB_USER);
+  const test = process.env.GCP_CLIENT_EMAIL;
   // calling Wit.ai api
   const tokens = query.keywords.split(",");
   tokens[0] = `"${tokens[0]}"`;
@@ -150,6 +152,7 @@ export const getServerSideProps = async function ({ query }) {
   return {
     props: {
       tweets: magicWellJson,
+      test,
     },
   };
 };
