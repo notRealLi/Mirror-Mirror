@@ -7,7 +7,8 @@ import {
   useGlobalStateContext,
 } from "../context/globalContext";
 
-const Results = ({ tweets }) => {
+const Results = ({ tweets, test }) => {
+  console.log(test);
   const [tweetIndex, setTweetIndex] = useState(0);
   const [tweetsSentiment, setTweetsSentiment] = useState("");
   const sentimentDiv = useRef(null);
