@@ -54,7 +54,7 @@ const Index = () => {
           name="keywords"
           type="text"
           autoComplete="off"
-          placeholder='e.g. "Organic Food, Canada"'
+          placeholder="Enter a topic..."
           spellCheck={false}
           value={keywords}
           onChange={onInputChange}
