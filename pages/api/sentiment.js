@@ -1,5 +1,4 @@
 import { google } from "googleapis";
-import googleServiceAccountKey from "../../apiKeys/Mirror Mirror-109ca6cdd6eb.json";
 
 export default async (req, res) => {
   try {
@@ -7,13 +6,13 @@ export default async (req, res) => {
 
     // getting gcp access token
     const googleJWTClient = new google.auth.JWT(
-      googleServiceAccountKey.client_email,
+      process.env.GCP_CLIENT_EMAIL,
       null,
-      googleServiceAccountKey.private_key,
+      process.env.GCP_PRIVATE_KEY,
       [
         "https://www.googleapis.com/auth/cloud-language",
         "https://www.googleapis.com/auth/cloud-platform",
-      ], // You may need to specify scopes other than analytics
+      ],
       null
     );
 
