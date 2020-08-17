@@ -5,7 +5,11 @@
   z-index: -1;
   background: $raisin;
 
-  #tsparticles {
+  .ease-out {
     height: 100%;
+
+    #tsparticles {
+      height: 100%;
+    }
   }
 }
