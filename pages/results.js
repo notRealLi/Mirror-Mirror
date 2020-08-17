@@ -2,11 +2,18 @@ import React, { useEffect, useState, useRef } from "react";
 import fetch from "isomorphic-unfetch";
 import { withRouter } from "next/router";
 import { motion, AnimatePresence } from "framer-motion";
+import {
+  useGlobalDispatchContext,
+  useGlobalStateContext,
+} from "../context/globalContext";
 
 const Results = ({ tweets }) => {
   const [tweetIndex, setTweetIndex] = useState(0);
   const [tweetsSentiment, setTweetsSentiment] = useState("");
   const sentimentDiv = useRef(null);
+
+  const dispatch = useGlobalDispatchContext();
+  const { colors } = useGlobalStateContext();
 
   useEffect(() => {
     if (tweets && tweets.length > 0) {
@@ -50,6 +57,19 @@ const Results = ({ tweets }) => {
             ? "Neutral"
             : "Positive"
         );
+
+        // set particles color
+        dispatch({
+          type: "CHANGE_PARTICLES_COLOR",
+          payload:
+            colors[
+              sentimentScore < -0.05
+                ? "negative"
+                : sentimentScore < 0.3
+                ? "neutral"
+                : "positive"
+            ],
+        });
       }
     }
 

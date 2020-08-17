@@ -23,7 +23,7 @@ export const useGlobalDispatchContext = () => useContext(GlobalDispatchContext);
 
 export const GlobalProvider = ({ children }) => {
   const [state, dispatch] = useReducer(globalReducer, {
-    colors: { gold: "#e28413", red: "#de3c4b", green: "#86e7b8" },
+    colors: { neutral: "#e28413", negative: "#de3c4b", positive: "#86e7b8" },
     particlesColor: "#e28413",
   });
 
