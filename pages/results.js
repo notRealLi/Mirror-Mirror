@@ -36,6 +36,8 @@ const Results = ({ tweets, test }) => {
           const sentimentRes = await fetch(`/api/sentiment?tweet=${tweet}`);
           const sentimentJson = await sentimentRes.json();
 
+          console.log(sentimentJson);
+
           if (
             sentimentJson &&
             sentimentJson.metadata &&
@@ -119,8 +121,6 @@ const Results = ({ tweets, test }) => {
 };
 
 export const getServerSideProps = async function ({ query }) {
-  console.log(process.env.DB_USER);
-  const test = process.env.GCP_CLIENT_EMAIL;
   // calling Wit.ai api
   const tokens = query.keywords.split(",");
   tokens[0] = `"${tokens[0]}"`;
@@ -153,7 +153,6 @@ export const getServerSideProps = async function ({ query }) {
   return {
     props: {
       tweets: magicWellJson,
-      test,
     },
   };
 };
