@@ -3,7 +3,7 @@ import googleServiceAccountKey from "../../apiKeys/Mirror Mirror-109ca6cdd6eb.js
 
 export default async (req, res) => {
   try {
-    const content = req.body.tweet;
+    const content = req.query.tweet;
 
     // getting gcp access token
     const googleJWTClient = new google.auth.JWT(
@@ -20,6 +20,7 @@ export default async (req, res) => {
     const googleRes = await googleJWTClient.authorize();
     const accessToken = googleRes.access_token;
 
+    // calling gcp sentiment api
     const body = JSON.stringify({
       payload: {
         textSnippet: {
@@ -39,7 +40,6 @@ export default async (req, res) => {
       body,
     });
     const sentimentJson = await sentimentRes.json();
-    console.log(sentimentJson);
 
     res.statusCode = 200;
     res.setHeader("Content-Type", "application/json");
