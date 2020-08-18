@@ -5,7 +5,7 @@ const Header = () => {
     <div className="header">
       <div className="flex">
         <div className="logo">
-          <a href="/">MIRROR</a>
+          <a href="/">M I R R O R</a>
         </div>
         <div className="nav-toggle">
           <div className="nav-menu">
