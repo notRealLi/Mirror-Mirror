@@ -1,30 +1,61 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<div align="center" id="mirror">
+<p align="center">
+<img src="https://raw.githubusercontent.com/notRealLi/Mirror-Mirror/master/public/mirror_mirror_logo.svg" width="100px" >
+<h1> Mirror Mirror </h1>
+</p>
+</div>
 
-## Getting Started
+---
 
-First, run the development server:
+### Table of Contents
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+- [Description](#description)
+- [How To Use](#how-to-use)
+- [Related Repos](#related-repos)
+- [Author Info](#author-info)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Description
 
-## Learn More
+A lightweight full stack web app that performs sentiment analysis on underlined topics using a well-trained Natural Language Processing model.
 
-To learn more about Next.js, take a look at the following resources:
+#### Technologies
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [Next.js](https://nextjs.org/)
+- [Flask](https://flask.palletsprojects.com)
+- [Google Natural Language API](https://cloud.google.com/natural-language)
+- [Wit.ai](https://wit.ai/)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+#### Structure Diagram
 
-## Deploy on Vercel
+<img src="https://raw.githubusercontent.com/notRealLi/Mirror-Mirror/master/public/diagram.png" width="600px" >
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+[Back To The Top](#mirror)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+---
+
+## How To Use
+
+On the [homepage](https://mirror-mirror.vercel.app/) of the app, enter any topic you'd like. The general sentiment and most recent tweets about the topic will be shown.
+
+More functionalities on the way...
+
+[Back To The Top](#mirror)
+
+---
+
+## Related Repos
+
+- [Magic Well](https://github.com/notRealLi/Magic-Well): An API that provides a number of functionalities including scraping tweets from Tweeter.
+
+[Back To The Top](#mirror)
+
+---
+
+## Author Info
+
+- [Website](https://notrealli.github.io/portfolio/)
+- [LinkedIn](https://www.linkedin.com/in/notrealli/)
+
+[Back To The Top](#mirror)
