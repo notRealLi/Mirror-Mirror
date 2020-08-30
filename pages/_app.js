@@ -20,6 +20,7 @@ const MyApp = ({ Component, pageProps, router }) => {
     };
 
     const routingError = () => {
+      setLoading(false);
       setError(true);
     };
 
