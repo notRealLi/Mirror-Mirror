@@ -1,6 +1,7 @@
 import { google } from "googleapis";
+import fetch from "isomorphic-unfetch";
 
-export default async (req, res) => {
+export const googleSentimentAnalysis = async (req, res) => {
   try {
     const content = req.query.tweet;
     const gcpClientEmail = process.env.GCP_CLIENT_EMAIL;
@@ -45,7 +46,25 @@ export default async (req, res) => {
     res.setHeader("Content-Type", "application/json");
     res.send(sentimentJson);
   } catch (err) {
-    res.statusCode = 300;
+    res.statusCode = 500;
+    res.send(JSON.stringify(err));
+  }
+};
+
+export default async (req, res) => {
+  try {
+    const content = req.query.q;
+    console.log(content);
+    const sentimentRes = await fetch(
+      `${process.env.MAGIC_WELL_URL}/ai/sentiment?q=${content}`
+    );
+    const sentimentJson = await sentimentRes.json();
+
+    res.statusCode = 200;
+    res.setHeader("Content-Type", "application/json");
+    res.send(sentimentJson);
+  } catch (err) {
+    res.statusCode = 500;
     res.send(JSON.stringify(err));
   }
 };
