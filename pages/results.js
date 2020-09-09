@@ -27,22 +27,19 @@ const Results = ({ tweets }) => {
 
   useEffect(() => {
     async function getSentiment() {
+      const neutralCutoff = 0.47;
+      const positiveCutoff = 0.55;
       if (!tweetsSentiment && tweets && tweets.length > 0) {
         let sentimentScore = 0;
         let sentimentScoreCount = 0;
 
-        for (const tweet of tweets.slice(0, 3)) {
-          const sentimentRes = await fetch(`/api/sentiment?tweet=${tweet}`);
+        for (const tweet of tweets.slice(0, 25)) {
+          let query = tweet.replace(/[^\w\s]/gi, " ");
+          const sentimentRes = await fetch(`/api/sentiment?q=${query}`);
           const sentimentJson = await sentimentRes.json();
 
-          console.log(sentimentJson);
-
-          if (
-            sentimentJson &&
-            sentimentJson.metadata &&
-            sentimentJson.metadata.sentiment_score
-          ) {
-            sentimentScore += Number(sentimentJson.metadata.sentiment_score);
+          if (sentimentJson && sentimentJson.score) {
+            sentimentScore += Number(sentimentJson.score);
             sentimentScoreCount++;
           }
         }
@@ -53,9 +50,9 @@ const Results = ({ tweets }) => {
             : sentimentScore / sentimentScoreCount;
 
         setTweetsSentiment(
-          sentimentScore < -0.05
+          sentimentScore < neutralCutoff
             ? "Negative"
-            : sentimentScore < 0.3
+            : sentimentScore < positiveCutoff
             ? "Neutral"
             : "Positive"
         );
@@ -65,9 +62,9 @@ const Results = ({ tweets }) => {
           type: "CHANGE_PARTICLES_COLOR",
           payload:
             colors[
-              sentimentScore < -0.05
+              sentimentScore < neutralCutoff
                 ? "negative"
-                : sentimentScore < 0.3
+                : sentimentScore < positiveCutoff
                 ? "neutral"
                 : "positive"
             ],
@@ -145,13 +142,14 @@ export const getServerSideProps = async function ({ query }) {
     : "N/A";
 
   // calling Magic Well api
-  const magicWellQueryUrl = `https://magic-well.herokuapp.com/tweets/search?keywords=${topic}&location=${location}`;
+  const magicWellQueryUrl = `${process.env.MAGIC_WELL_URL}/tweets/search?keywords=${topic}&location=${location}`;
   const magicWellRes = await fetch(magicWellQueryUrl);
   const magicWellJson = await magicWellRes.json();
+  const tweets = magicWellJson.map((tweet) => tweet.text);
 
   return {
     props: {
-      tweets: magicWellJson,
+      tweets,
     },
   };
 };

@@ -54,7 +54,6 @@ export const googleSentimentAnalysis = async (req, res) => {
 export default async (req, res) => {
   try {
     const content = req.query.q;
-    console.log(content);
     const sentimentRes = await fetch(
       `${process.env.MAGIC_WELL_URL}/ai/sentiment?q=${content}`
     );
