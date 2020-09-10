@@ -2,54 +2,116 @@
   // TODO: styling for low-height screens
   width: 100%;
   height: 100vh;
+  margin-top: 20vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  color: $white;
 
-  #sentiment {
-    animation: float 6s ease-in-out infinite;
-    width: 200px;
-    height: 200px;
-    border: none;
-    border-radius: 100%;
-    margin: 0 4rem 4rem 4rem;
+  .results-content {
+    position: absolute;
     display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
-    justify-content: center;
-    box-shadow: 0px 0px 15px $gold;
-    background: $raisin;
-    color: $gold;
+    color: $white;
+    width: 85%;
+    max-width: 500px;
 
-    &.neutral {
-      color: $gold;
+    #sentiment {
+      animation: float 6s ease-in-out infinite;
+      width: 200px;
+      height: 200px;
+      min-height: 200px;
+      border: none;
+      border-radius: 100%;
+      margin: 2rem 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       box-shadow: 0px 0px 15px $gold;
+      background: $raisin;
+      color: $gold;
+
+      &.neutral {
+        color: $gold;
+        box-shadow: 0px 0px 15px $gold;
+      }
+
+      &.positive {
+        color: $green;
+        box-shadow: 0px 0px 15px $green;
+      }
+
+      &.negative {
+        color: $red;
+        box-shadow: 0px 0px 15px $red;
+      }
     }
 
-    &.positive {
-      color: $green;
-      box-shadow: 0px 0px 15px $green;
-    }
+    .tweet {
+      display: flex;
+      justify-content: flex-start;
+      border: 2px solid white;
+      border-radius: 10px;
+      width: 100%;
+      padding: 15px;
+      margin-top: 2rem;
+      max-height: 25vh;
+      min-height: 100px;
+      position: relative;
 
-    &.negative {
-      color: $red;
-      box-shadow: 0px 0px 15px $red;
-    }
-  }
+      /*** chat bubbel effect ***/
+      // TODO: better effect
+      &:before {
+        content: "";
+        width: 0px;
+        height: 0px;
+        position: absolute;
+        border-left: 10px solid transparent;
+        border-right: 10px solid $white;
+        border-top: 10px solid $white;
+        border-bottom: 10px solid transparent;
+        left: -21px;
+        top: 36px;
+      }
 
-  p {
-    width: 50%;
-    height: 4rem;
-    margin-top: 2rem;
-    word-break: break-all;
-    white-space: normal;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+      &:after {
+        content: "";
+        width: 0px;
+        height: 0px;
+        position: absolute;
+        border-left: 8px solid transparent;
+        border-right: 8px solid $raisin;
+        border-top: 8px solid $raisin;
+        border-bottom: 8px solid transparent;
+        left: -16px;
+        top: 38px;
+      }
+      /*** end of chat bubbel effect ***/
 
-    @include media("<=700px") {
-      width: 80%;
+      p {
+        margin: 0;
+        width: 100%;
+        word-break: break-all;
+        white-space: normal;
+        overflow-y: auto;
+
+        // scrollbar styling
+        &::-webkit-scrollbar {
+          width: 8px;
+          background: $raisin;
+        }
+
+        &::-webkit-scrollbar-track {
+          background: transparent;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          border-radius: 10px;
+          background: rgba($color: $gray, $alpha: 0.1);
+        }
+      }
     }
   }
 }

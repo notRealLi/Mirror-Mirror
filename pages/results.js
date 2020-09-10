@@ -7,6 +7,9 @@ import {
   useGlobalStateContext,
 } from "../context/globalContext";
 
+// constants
+const MAX_TWEET_LENGTH = 300;
+
 const Results = ({ tweets }) => {
   const [tweetIndex, setTweetIndex] = useState(0);
   const [tweetsSentiment, setTweetsSentiment] = useState("");
@@ -34,6 +37,7 @@ const Results = ({ tweets }) => {
         let sentimentScoreCount = 0;
 
         for (const tweet of tweets.slice(0, 25)) {
+          // TODO: Better special character filtering
           let query = tweet.replace(/[^\w\s]/gi, " ");
           const sentimentRes = await fetch(`/api/sentiment?q=${query}`);
           const sentimentJson = await sentimentRes.json();
@@ -73,6 +77,13 @@ const Results = ({ tweets }) => {
     }
 
     getSentiment();
+
+    // slicing tweets
+    tweets = tweets.map((tweet) =>
+      tweet.length > MAX_TWEET_LENGTH
+        ? tweet.slice(0, MAX_TWEET_LENGTH).concat("...")
+        : tweet
+    );
   }, [tweetsSentiment]);
 
   return (
@@ -84,33 +95,40 @@ const Results = ({ tweets }) => {
         animate={{ opacity: 1 }}
         key="success"
       >
-        <AnimatePresence exitBeforeEnter>
-          <motion.div
-            id="sentiment"
-            className={tweetsSentiment.toLowerCase()}
-            ref={sentimentDiv}
-            exit={{ opacity: 0 }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            key={tweetsSentiment}
-          >
-            <h2>{tweetsSentiment !== "" ? tweetsSentiment : "Calculating"}</h2>
-          </motion.div>
-        </AnimatePresence>
-        <AnimatePresence exitBeforeEnter>
-          <motion.p
-            exit={{ opacity: 0 }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            key={tweetIndex}
-          >
-            {tweets && tweets.length > 0
-              ? tweetIndex >= 0
-                ? tweets[tweetIndex]
-                : tweets[0]
-              : "No tweets found"}
-          </motion.p>
-        </AnimatePresence>
+        <div className="results-content">
+          <AnimatePresence exitBeforeEnter>
+            <motion.div
+              id="sentiment"
+              className={tweetsSentiment.toLowerCase()}
+              ref={sentimentDiv}
+              exit={{ opacity: 0 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              key={tweetsSentiment}
+            >
+              <h2>
+                {tweetsSentiment !== "" ? tweetsSentiment : "Calculating"}
+              </h2>
+            </motion.div>
+          </AnimatePresence>
+          <AnimatePresence exitBeforeEnter>
+            <motion.div
+              className="tweet"
+              exit={{ opacity: 0 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              key={tweetIndex}
+            >
+              <p>
+                {tweets && tweets.length > 0
+                  ? tweetIndex >= 0
+                    ? tweets[tweetIndex]
+                    : tweets[0]
+                  : "No tweets found"}
+              </p>
+            </motion.div>
+          </AnimatePresence>
+        </div>
       </motion.div>
     </AnimatePresence>
   );
