@@ -14,7 +14,6 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    color: $white;
     width: 85%;
     max-width: 500px;
 
@@ -91,6 +90,7 @@
       /*** end of chat bubbel effect ***/
 
       p {
+        color: $gold;
         margin: 0;
         width: 100%;
         word-break: break-all;
