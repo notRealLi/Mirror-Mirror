@@ -10,7 +10,7 @@
   transition: margin-top 0.2s;
 
   @include media("<=450px") {
-    margin-top: 24vh;
+    margin-top: 20vh;
   }
 
   .results-content {
@@ -105,6 +105,10 @@
         word-break: break-all;
         white-space: normal;
         overflow-y: auto;
+
+        @include media("<=450px") {
+          font-size: 0.9rem;
+        }
 
         // scrollbar styling
         &::-webkit-scrollbar {
