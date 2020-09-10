@@ -7,6 +7,11 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  transition: margin-top 0.2s;
+
+  @include media("<=450px") {
+    margin-top: 24vh;
+  }
 
   .results-content {
     position: absolute;
@@ -59,6 +64,10 @@
       max-height: 25vh;
       min-height: 100px;
       position: relative;
+
+      @include media("<=450px") {
+        margin-top: 1rem;
+      }
 
       /*** chat bubbel effect ***/
       // TODO: better effect
