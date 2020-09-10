@@ -107,7 +107,7 @@ const Results = ({ tweets }) => {
               key={tweetsSentiment}
             >
               <h2>
-                {tweetsSentiment !== "" ? tweetsSentiment : "Calculating"}
+                {tweetsSentiment !== "" ? tweetsSentiment : "Calibrating"}
               </h2>
             </motion.div>
           </AnimatePresence>

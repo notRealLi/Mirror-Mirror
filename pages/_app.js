@@ -8,10 +8,12 @@ import { GlobalProvider } from "../context/globalContext";
 
 const MyApp = ({ Component, pageProps, router }) => {
   const [loading, setLoading] = useState(false);
+  const [loadingText, setLoadingText] = useState("Loading...");
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    const routingStart = () => {
+    const routingStart = (url) => {
+      if (url.startsWith("/results")) setLoadingText("Fetching tweets...");
       setLoading(true);
     };
 
@@ -48,7 +50,7 @@ const MyApp = ({ Component, pageProps, router }) => {
             animate={{ opacity: 1 }}
             key="loading"
           >
-            <p>{loading ? "Loading..." : "Server Error"}</p>
+            <p>{loading ? loadingText : "Server Error"}</p>
           </motion.div>
         ) : (
           <Component {...pageProps} key={router.route} />
