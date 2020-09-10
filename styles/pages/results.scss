@@ -2,7 +2,7 @@
   // TODO: styling for low-height screens
   width: 100%;
   height: 100vh;
-  margin-top: 20vh;
+  margin-top: 27vh;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -52,7 +52,7 @@
     .tweet {
       display: flex;
       justify-content: flex-start;
-      border: 2px solid white;
+      border: 2px solid $gold;
       border-radius: 10px;
       width: 100%;
       padding: 15px;
@@ -69,8 +69,8 @@
         height: 0px;
         position: absolute;
         border-left: 10px solid transparent;
-        border-right: 10px solid $white;
-        border-top: 10px solid $white;
+        border-right: 10px solid $gold;
+        border-top: 10px solid $gold;
         border-bottom: 10px solid transparent;
         left: -21px;
         top: 36px;
