@@ -24,6 +24,11 @@
         text-decoration: none;
         color: $gold;
         text-shadow: 10px 10px $gold-shadow;
+        transition: font-size 0.2s;
+
+        @include media("<=400px") {
+          font-size: 1.5rem;
+        }
 
         &:focus {
           -webkit-tap-highlight-color: transparent;
