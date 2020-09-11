@@ -13,6 +13,7 @@ const Index = () => {
   };
 
   const onInputBlur = (e) => {
+    setKeywords("");
     searchLabelRef.current.classList.remove("active");
   };
 
