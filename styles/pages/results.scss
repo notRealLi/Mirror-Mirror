@@ -2,7 +2,7 @@
   // TODO: styling for low-height screens
   width: 100%;
   height: 100vh;
-  margin-top: 27vh;
+  padding-top: 27vh;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -10,7 +10,7 @@
   transition: margin-top 0.2s;
 
   @include media("<=450px") {
-    margin-top: 20vh;
+    padding-top: 20vh;
   }
 
   #sentiment {
