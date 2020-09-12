@@ -9,6 +9,8 @@
 
   .ease-out {
     height: 100%;
+    filter: blur(2px);
+    -webkit-filter: blur(2px);
 
     #tsparticles {
       height: 100%;

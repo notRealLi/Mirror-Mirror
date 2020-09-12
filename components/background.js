@@ -36,7 +36,7 @@ const Background = () => {
                   enable: false,
                 },
                 size: {
-                  value: 3,
+                  value: 7,
                   random: true,
                   anim: {
                     speed: 4,
