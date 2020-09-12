@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 
 const Index = () => {
   const [keywords, setKeywords] = useState("");
+  const [hoveringButton, setHoveringButton] = useState(false);
   const searchLabelRef = useRef(null);
   const router = useRouter();
 
@@ -12,7 +13,15 @@ const Index = () => {
       router.push({ pathname: "/results", query: { keywords } });
   };
 
-  const onInputBlur = (e) => {
+  const onButtonMouseEnter = () => {
+    setHoveringButton(true);
+  };
+  const onButtonMouseLeave = () => {
+    setHoveringButton(false);
+  };
+
+  const onInputBlur = () => {
+    if (hoveringButton) return;
     setKeywords("");
     searchLabelRef.current.classList.remove("active");
   };
@@ -65,7 +74,12 @@ const Index = () => {
           onKeyDown={onInputKeyDown}
         />
       </label>
-      <button onClick={showResults} disabled={keywords === ""}>
+      <button
+        onClick={showResults}
+        disabled={keywords === ""}
+        onMouseEnter={onButtonMouseEnter}
+        onMouseLeave={onButtonMouseLeave}
+      >
         <img src="/eye.svg" alt="" />
       </button>
     </motion.div>
