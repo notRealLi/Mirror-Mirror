@@ -2,119 +2,164 @@
   // TODO: styling for low-height screens
   width: 100%;
   height: 100vh;
-  padding-top: 27vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
+  padding-top: 23vh;
+
   transition: margin-top 0.2s;
 
   @include media("<=450px") {
     padding-top: 20vh;
   }
-
-  #sentiment {
-    animation: float 6s ease-in-out infinite;
-    width: 200px;
-    height: 200px;
-    min-height: 200px;
-    border: none;
-    border-radius: 100%;
-    margin: 2rem 4rem;
+  .container {
+    width: 85%;
+    height: 100%;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0px 0px 15px $gold;
-    background: $raisin;
-    color: $gold;
-
-    &.neutral {
-      color: $gold;
-      box-shadow: 0px 0px 15px $gold;
-    }
-
-    &.positive {
-      color: $green;
-      box-shadow: 0px 0px 15px $green;
-    }
-
-    &.negative {
-      color: $red;
-      box-shadow: 0px 0px 15px $red;
-    }
-  }
-
-  .tweet {
-    display: flex;
+    flex-direction: row;
     justify-content: flex-start;
-    border: 2px solid $gold;
-    border-radius: 10px;
-    width: 75%;
-    max-width: 500px;
-    padding: 15px;
-    margin-top: 2rem;
-    max-height: 25vh;
-    min-height: 100px;
-    position: relative;
+    align-items: center;
 
-    @include media("<=450px") {
-      margin-top: 1rem;
-    }
+    .sentiment-section {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      width: 40%;
+      height: 100%;
 
-    /*** chat bubbel effect ***/
-    // TODO: better effect
-    &:before {
-      content: "";
-      width: 0px;
-      height: 0px;
-      position: absolute;
-      border-left: 10px solid transparent;
-      border-right: 10px solid $gold;
-      border-top: 10px solid $gold;
-      border-bottom: 10px solid transparent;
-      left: -21px;
-      top: 36px;
-    }
-
-    &:after {
-      content: "";
-      width: 0px;
-      height: 0px;
-      position: absolute;
-      border-left: 8px solid transparent;
-      border-right: 8px solid $raisin;
-      border-top: 8px solid $raisin;
-      border-bottom: 8px solid transparent;
-      left: -16px;
-      top: 38px;
-    }
-    /*** end of chat bubbel effect ***/
-
-    p {
-      color: $gold;
-      margin: 0;
-      width: 100%;
-      word-break: break-all;
-      white-space: normal;
-      overflow-y: auto;
-
-      @include media("<=450px") {
-        font-size: 0.9rem;
-      }
-
-      // scrollbar styling
-      &::-webkit-scrollbar {
-        width: 8px;
+      #sentiment {
+        animation: float 6s ease-in-out infinite;
+        width: 25vw;
+        height: 25vw;
+        font-size: 1.5rem;
+        border: none;
+        border-radius: 100%;
+        // margin: 2rem 4rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0px 0px 15px $gold;
         background: $raisin;
+        color: $gold;
+        transition: width height 0.2s;
+
+        &.neutral {
+          color: $gold;
+          box-shadow: 0px 0px 15px $gold;
+        }
+
+        &.positive {
+          color: $green;
+          box-shadow: 0px 0px 15px $green;
+        }
+
+        &.negative {
+          color: $red;
+          box-shadow: 0px 0px 15px $red;
+        }
+      }
+    }
+
+    .details-section {
+      width: 60%;
+      height: 100%;
+      order: -1;
+      display: flex;
+      flex-direction: column;
+
+      h2 {
+        color: $white-shadow;
+        font-size: 1.8rem;
+
+        span {
+          display: inline-block;
+          margin-left: 10px;
+          color: $white;
+
+          &.neutral {
+            color: $gold;
+          }
+
+          &.positive {
+            color: $green;
+          }
+
+          &.negative {
+            color: $red;
+          }
+        }
       }
 
-      &::-webkit-scrollbar-track {
-        background: transparent;
-      }
-
-      &::-webkit-scrollbar-thumb {
+      .tweet {
+        display: flex;
+        justify-content: flex-start;
+        border: 2px solid $white;
         border-radius: 10px;
-        background: rgba($color: $gray, $alpha: 0.1);
+        width: 70%;
+        // max-width: 500px;
+        padding: 15px;
+        // margin-top: 2rem;
+        max-height: 25vh;
+        min-height: 100px;
+        position: relative;
+
+        @include media("<=450px") {
+          margin-top: 1rem;
+        }
+
+        /*** chat bubbel effect ***/
+        // TODO: better effect
+        &:before {
+          content: "";
+          width: 0px;
+          height: 0px;
+          position: absolute;
+          border-left: 10px solid transparent;
+          border-right: 10px solid $white;
+          border-top: 10px solid $white;
+          border-bottom: 10px solid transparent;
+          left: -21px;
+          top: 36px;
+        }
+
+        &:after {
+          content: "";
+          width: 0px;
+          height: 0px;
+          position: absolute;
+          border-left: 8px solid transparent;
+          border-right: 8px solid $raisin;
+          border-top: 8px solid $raisin;
+          border-bottom: 8px solid transparent;
+          left: -16px;
+          top: 38px;
+        }
+        /*** end of chat bubbel effect ***/
+
+        p {
+          color: $white;
+          margin: 0;
+          width: 100%;
+          word-break: break-all;
+          white-space: normal;
+          overflow-y: auto;
+
+          @include media("<=450px") {
+            font-size: 0.9rem;
+          }
+
+          // scrollbar styling
+          &::-webkit-scrollbar {
+            width: 8px;
+            background: $raisin;
+          }
+
+          &::-webkit-scrollbar-track {
+            background: transparent;
+          }
+
+          &::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            background: rgba($color: $gray, $alpha: 0.1);
+          }
+        }
       }
     }
   }

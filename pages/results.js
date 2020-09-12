@@ -10,9 +10,13 @@ import {
 // constants
 const MAX_TWEET_LENGTH = 300;
 
-const Results = ({ tweets }) => {
+const Results = ({ tweets, topic }) => {
   const [tweetIndex, setTweetIndex] = useState(0);
-  const [tweetsSentiment, setTweetsSentiment] = useState("");
+  const [tweetsSentiment, setTweetsSentiment] = useState({
+    done: false,
+    label: "Calibrating...",
+    score: "Calculating...",
+  });
   const sentimentDiv = useRef(null);
 
   const dispatch = useGlobalDispatchContext();
@@ -29,52 +33,63 @@ const Results = ({ tweets }) => {
   });
 
   useEffect(() => {
-    async function getSentiment() {
+    const calculateScore = (score, firstCutoff, secondCutoff) => {
+      console.log(score);
+      let res;
+      if (score < firstCutoff) res = (score / firstCutoff) * 0.33;
+      else if (score < secondCutoff)
+        res =
+          0.33 + ((score - firstCutoff) / (secondCutoff - firstCutoff)) * 0.33;
+      else res = 0.66 + ((score - secondCutoff) / (1 - secondCutoff)) * 0.33;
+
+      return res.toFixed(2);
+    };
+    const getSentiment = async () => {
       const neutralCutoff = 0.47;
       const positiveCutoff = 0.55;
-      if (!tweetsSentiment && tweets && tweets.length > 0) {
-        let sentimentScore = 0;
-        let sentimentScoreCount = 0;
+      if (!tweetsSentiment.done && tweets && tweets.length > 0) {
+        let score = 0;
+        let scoreCount = 0;
 
-        for (const tweet of tweets.slice(0, 25)) {
+        for (const tweet of tweets.slice(0, 30)) {
           // TODO: Better special character filtering
           let query = tweet.replace(/[^\w\s]/gi, " ");
           const sentimentRes = await fetch(`/api/sentiment?q=${query}`);
           const sentimentJson = await sentimentRes.json();
 
           if (sentimentJson && sentimentJson.score) {
-            sentimentScore += Number(sentimentJson.score);
-            sentimentScoreCount++;
+            score += Number(sentimentJson.score);
+            scoreCount++;
           }
         }
 
-        sentimentScore =
-          sentimentScoreCount == 0
-            ? sentimentScore
-            : sentimentScore / sentimentScoreCount;
+        score = scoreCount == 0 ? score : score / scoreCount;
 
-        setTweetsSentiment(
-          sentimentScore < neutralCutoff
-            ? "Negative"
-            : sentimentScore < positiveCutoff
-            ? "Neutral"
-            : "Positive"
-        );
+        setTweetsSentiment({
+          score: calculateScore(score, neutralCutoff, positiveCutoff),
+          label:
+            score < neutralCutoff
+              ? "Negative"
+              : score < positiveCutoff
+              ? "Neutral"
+              : "Positive",
+          done: true,
+        });
 
         // set particles color
         dispatch({
           type: "CHANGE_PARTICLES_COLOR",
           payload:
             colors[
-              sentimentScore < neutralCutoff
+              score < neutralCutoff
                 ? "negative"
-                : sentimentScore < positiveCutoff
+                : score < positiveCutoff
                 ? "neutral"
                 : "positive"
             ],
         });
       }
-    }
+    };
 
     getSentiment();
 
@@ -95,36 +110,70 @@ const Results = ({ tweets }) => {
         animate={{ opacity: 1 }}
         key="success"
       >
-        <AnimatePresence exitBeforeEnter>
-          <motion.div
-            id="sentiment"
-            className={tweetsSentiment.toLowerCase()}
-            ref={sentimentDiv}
-            exit={{ opacity: 0 }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            key={tweetsSentiment}
-          >
-            <h2>{tweetsSentiment !== "" ? tweetsSentiment : "Calibrating"}</h2>
-          </motion.div>
-        </AnimatePresence>
-        <AnimatePresence exitBeforeEnter>
-          <motion.div
-            className="tweet"
-            exit={{ opacity: 0 }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            key={tweetIndex}
-          >
-            <p>
-              {tweets && tweets.length > 0
-                ? tweetIndex >= 0
-                  ? tweets[tweetIndex]
-                  : tweets[0]
-                : "No tweets found"}
-            </p>
-          </motion.div>
-        </AnimatePresence>
+        <div className="container">
+          <div className="sentiment-section">
+            <AnimatePresence exitBeforeEnter>
+              <motion.div
+                id="sentiment"
+                className={tweetsSentiment.label.toLowerCase()}
+                ref={sentimentDiv}
+                exit={{ opacity: 0 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                key={tweetsSentiment.label}
+              >
+                <h2>{tweetsSentiment.label}</h2>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+          <div className="details-section">
+            <h2>
+              Topic: <span>{topic}</span>
+            </h2>
+            <h2>
+              Sentiment Score:
+              <AnimatePresence exitBeforeEnter>
+                <motion.span
+                  className={tweetsSentiment.label.toLowerCase()}
+                  exit={{ opacity: 0 }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  key={tweetsSentiment.score}
+                >
+                  {tweetsSentiment.score}
+                </motion.span>
+              </AnimatePresence>
+            </h2>
+            <h2>Tweets: </h2>
+            <AnimatePresence exitBeforeEnter>
+              <motion.div
+                className="tweet"
+                exit={{ opacity: 0 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                key={tweetIndex}
+              >
+                <p>
+                  {tweets && tweets.length > 0
+                    ? tweetIndex >= 0
+                      ? tweets[tweetIndex]
+                      : tweets[0]
+                    : "No tweets found"}
+                </p>
+                {/* <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Reprehenderit omnis, fuga laboriosam unde temporibus eos quasi
+                  velit consequatur commodi quos optio nobis delectus eaque nisi
+                  facere! Repudiandae tempora accusamus ad quia, id ex harum quo
+                  repellendus deserunt ipsum sapiente cum placeat? Magnam
+                  perspiciatis quisquam quod nobis, recusandae ut impedit enim
+                  obcaecati odit ab! Neque, at iste. Impedit beatae deleniti
+                  atque?
+                </p> */}
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </div>
       </motion.div>
     </AnimatePresence>
   );
@@ -136,6 +185,7 @@ export const getServerSideProps = async function ({ query }) {
   tokens[0] = `"${tokens[0]}"`;
   const utterance = tokens.join(",");
   const witAiQueryUrl = `https://api.wit.ai/message?v=20200811&q=${utterance}`;
+  // TODO: handle no network connection on server
   const witAiRes = await fetch(witAiQueryUrl, {
     method: "GET",
     headers: {
@@ -164,6 +214,7 @@ export const getServerSideProps = async function ({ query }) {
   return {
     props: {
       tweets,
+      topic,
     },
   };
 };
