@@ -57,7 +57,7 @@
       }
     }
 
-    .details-section {
+    .details-and-tweets-section {
       width: 60%;
       height: 100%;
       order: -1;
@@ -72,6 +72,10 @@
           display: inline-block;
           margin-left: 10px;
           color: $white;
+        }
+
+        #score {
+          color: $gold;
 
           &.neutral {
             color: $gold;
@@ -84,6 +88,18 @@
           &.negative {
             color: $red;
           }
+        }
+      }
+
+      .details {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        margin-bottom: 3rem;
+
+        h2 {
+          margin: 0 0 0.5rem 0;
         }
       }
 

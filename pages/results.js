@@ -126,25 +126,34 @@ const Results = ({ tweets, topic }) => {
               </motion.div>
             </AnimatePresence>
           </div>
-          <div className="details-section">
-            <h2>
-              Topic: <span>{topic}</span>
-            </h2>
-            <h2>
-              Sentiment Score:
-              <AnimatePresence exitBeforeEnter>
-                <motion.span
-                  className={tweetsSentiment.label.toLowerCase()}
-                  exit={{ opacity: 0 }}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  key={tweetsSentiment.score}
-                >
-                  {tweetsSentiment.score}
-                </motion.span>
-              </AnimatePresence>
-            </h2>
-            <h2>Tweets: </h2>
+          <div className="details-and-tweets-section">
+            <div className="details">
+              <h2>
+                Topic: <span>{`"${topic}"`}</span>
+              </h2>
+              <h2>
+                Location: <span>Unspecified</span>
+              </h2>
+              <h2>
+                Recency: <span>Unspecified</span>
+              </h2>
+              <h2>
+                Score:
+                <AnimatePresence exitBeforeEnter>
+                  <motion.span
+                    id="score"
+                    className={tweetsSentiment.label.toLowerCase()}
+                    exit={{ opacity: 0 }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    key={tweetsSentiment.score}
+                  >
+                    {tweetsSentiment.score}
+                  </motion.span>
+                </AnimatePresence>
+              </h2>
+            </div>
+            <h2>{/* What folks were saying: */}What folks are saying: </h2>
             <AnimatePresence exitBeforeEnter>
               <motion.div
                 className="tweet"
