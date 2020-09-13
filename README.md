@@ -56,7 +56,7 @@ More functionalities on the way...
 
 ## Related Repos
 
-- [Magic Well](https://github.com/notRealLi/Magic-Well): An API that provides a number of functionalities including scraping tweets from Twitter.
+- [Magic Well](https://github.com/notRealLi/Magic-Well): An API that provides a number of functionalities including fetching tweets from Twitter and performing sentiment evaluaction on texts.
 
 [Back To The Top](#mirror)
 
