@@ -1,3 +1,6 @@
+$small-screen: "500px";
+$short-screen: "750px";
+
 .header {
   position: absolute;
   left: 0;
@@ -7,6 +10,11 @@
   height: 10vh;
   z-index: 5;
   padding: 3rem 0;
+  transition: padding 0.2s;
+
+  @media (max-width: $small-screen), (max-height: $small-screen) {
+    padding: 1.5rem 0 2.5rem 0;
+  }
 
   .flex {
     width: 85%;
