@@ -1,21 +1,37 @@
+$max-bubble-size-large: 410px;
+$max-bubble-size-medium: 250px;
+$max-bubble-size-small: 210px;
+$min-bubble-size-medium: 200px;
+$min-bubble-size-small: 150px;
+$medium-screen: "1200px";
+$small-screen: "500px";
+$short-screen: "1000px";
+
 .results {
   // TODO: styling for low-height screens
   width: 100%;
-  height: 100vh;
-  padding-top: 23vh;
+  height: 100%;
 
-  transition: margin-top 0.2s;
-
-  @include media("<=450px") {
-    padding-top: 20vh;
-  }
   .container {
     width: 85%;
     height: 100%;
+    padding-bottom: 15px;
+    padding-top: 27vh;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    align-items: center;
+    align-items: flex-start;
+    transition: padding-top 0.2s;
+
+    @media (max-width: $medium-screen) {
+      padding-top: 21vh;
+      flex-direction: column;
+    }
+
+    @media (max-width: $small-screen),
+      (max-height: $short-screen) and (max-width: $medium-screen) {
+      padding-top: 16vh;
+    }
 
     .sentiment-section {
       display: flex;
@@ -24,14 +40,28 @@
       width: 40%;
       height: 100%;
 
+      @media (max-width: $medium-screen) {
+        width: 100%;
+        height: fit-content;
+        align-items: center;
+        margin-bottom: 5rem;
+      }
+
+      @media (max-width: $small-screen), (max-height: $short-screen) {
+        margin-bottom: 1.5rem;
+      }
+
       #sentiment {
         animation: float 6s ease-in-out infinite;
         width: 25vw;
+        min-width: $min-bubble-size-medium;
+        max-width: $max-bubble-size-large;
         height: 25vw;
-        font-size: 1.5rem;
+        min-height: $min-bubble-size-medium;
+        max-height: $max-bubble-size-large;
+        font-size: 1.5vw;
         border: none;
         border-radius: 100%;
-        // margin: 2rem 4rem;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -39,6 +69,20 @@
         background: $raisin;
         color: $gold;
         transition: width height 0.2s;
+
+        @media (max-width: $medium-screen) {
+          font-size: 1rem;
+          max-width: $max-bubble-size-medium;
+          max-height: $max-bubble-size-medium;
+        }
+
+        @media (max-width: $small-screen) {
+          font-size: 0.8rem;
+          max-width: $max-bubble-size-small;
+          max-height: $max-bubble-size-small;
+          min-width: $min-bubble-size-small;
+          min-height: $min-bubble-size-small;
+        }
 
         &.neutral {
           color: $gold;
@@ -63,61 +107,117 @@
       order: -1;
       display: flex;
       flex-direction: column;
+      justify-content: flex-start;
+
+      @media (max-width: $medium-screen) {
+        width: 100%;
+        order: 1;
+      }
 
       h2 {
         color: $white-shadow;
+        font-size: 1.4rem;
+        margin: 0 0 0.4rem 0;
+
+        @media (max-width: $medium-screen) {
+          text-align: center;
+          width: 30%;
+          margin-bottom: 2rem;
+          font-size: 1.2rem;
+
+          &:nth-child(1) {
+            width: 100%;
+          }
+
+          span {
+            display: block;
+            font-size: 1.5rem;
+            text-align: center;
+          }
+        }
+
+        @media (max-width: $small-screen),
+          (max-height: $short-screen) and (max-width: $medium-screen) {
+          font-size: 1rem;
+          margin-bottom: 1rem;
+
+          span {
+            font-size: 1rem;
+          }
+        }
+      }
+
+      span {
+        display: inline-block;
+        margin-left: 10px;
+        color: $white;
         font-size: 1.8rem;
+      }
 
-        span {
-          display: inline-block;
-          margin-left: 10px;
-          color: $white;
-        }
+      #score {
+        color: $gold;
 
-        #score {
+        &.neutral {
           color: $gold;
+        }
 
-          &.neutral {
-            color: $gold;
-          }
+        &.positive {
+          color: $green;
+        }
 
-          &.positive {
-            color: $green;
-          }
-
-          &.negative {
-            color: $red;
-          }
+        &.negative {
+          color: $red;
         }
       }
+    }
 
-      .details {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: flex-start;
-        margin-bottom: 3rem;
+    .details {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      margin: 0 0 3rem 0;
 
-        h2 {
-          margin: 0 0 0.5rem 0;
-        }
+      @media (max-width: $medium-screen) {
+        width: 100%;
+        margin: 0 0 1rem 0;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        flex-wrap: wrap;
       }
 
-      .tweet {
+      @media (max-width: $small-screen),
+        (max-height: $short-screen) and (max-width: $medium-screen) {
+        margin: 0;
+      }
+    }
+
+    .tweets {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+
+      @media (max-width: $medium-screen) {
+        width: 100%;
+      }
+
+      .text-bubble {
         display: flex;
         justify-content: flex-start;
         border: 2px solid $white;
         border-radius: 10px;
         width: 70%;
-        // max-width: 500px;
         padding: 15px;
-        // margin-top: 2rem;
-        max-height: 25vh;
         min-height: 100px;
         position: relative;
 
-        @include media("<=450px") {
-          margin-top: 1rem;
+        @media (max-width: $medium-screen) {
+          width: 100%;
+        }
+
+        @media (max-width: $small-screen) {
+          padding: 10px;
         }
 
         /*** chat bubbel effect ***/
@@ -153,12 +253,11 @@
           color: $white;
           margin: 0;
           width: 100%;
-          word-break: break-all;
+          word-break: break-word;
           white-space: normal;
-          overflow-y: auto;
 
-          @include media("<=450px") {
-            font-size: 0.9rem;
+          @media (max-width: $small-screen) {
+            font-size: 0.8rem;
           }
 
           // scrollbar styling

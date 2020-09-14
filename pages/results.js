@@ -14,8 +14,8 @@ const Results = ({ tweets, topic }) => {
   const [tweetIndex, setTweetIndex] = useState(0);
   const [tweetsSentiment, setTweetsSentiment] = useState({
     done: false,
-    label: "Calibrating...",
-    score: "Calculating...",
+    label: "Calibrating",
+    score: "Calculating",
   });
   const sentimentDiv = useRef(null);
 
@@ -26,7 +26,7 @@ const Results = ({ tweets, topic }) => {
     if (tweets && tweets.length > 0) {
       const changeTweet = setInterval(() => {
         setTweetIndex((tweetIndex) => (tweetIndex + 1) % tweets.length);
-      }, 5000);
+      }, 6000);
 
       return () => clearInterval(changeTweet);
     }
@@ -132,10 +132,10 @@ const Results = ({ tweets, topic }) => {
                 Topic: <span>{`"${topic}"`}</span>
               </h2>
               <h2>
-                Location: <span>Unspecified</span>
+                Location: <span>N/A</span>
               </h2>
               <h2>
-                Recency: <span>Unspecified</span>
+                Recency: <span>N/A</span>
               </h2>
               <h2>
                 Score:
@@ -153,34 +153,26 @@ const Results = ({ tweets, topic }) => {
                 </AnimatePresence>
               </h2>
             </div>
-            <h2>{/* What folks were saying: */}What folks are saying: </h2>
-            <AnimatePresence exitBeforeEnter>
-              <motion.div
-                className="tweet"
-                exit={{ opacity: 0 }}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                key={tweetIndex}
-              >
-                <p>
-                  {tweets && tweets.length > 0
-                    ? tweetIndex >= 0
-                      ? tweets[tweetIndex]
-                      : tweets[0]
-                    : "No tweets found"}
-                </p>
-                {/* <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Reprehenderit omnis, fuga laboriosam unde temporibus eos quasi
-                  velit consequatur commodi quos optio nobis delectus eaque nisi
-                  facere! Repudiandae tempora accusamus ad quia, id ex harum quo
-                  repellendus deserunt ipsum sapiente cum placeat? Magnam
-                  perspiciatis quisquam quod nobis, recusandae ut impedit enim
-                  obcaecati odit ab! Neque, at iste. Impedit beatae deleniti
-                  atque?
-                </p> */}
-              </motion.div>
-            </AnimatePresence>
+            <div className="tweets">
+              <h2>{/* What folks were saying: */}What folks are saying: </h2>
+              <AnimatePresence exitBeforeEnter>
+                <motion.div
+                  className="text-bubble"
+                  exit={{ opacity: 0 }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  key={tweetIndex}
+                >
+                  <p>
+                    {tweets && tweets.length > 0
+                      ? tweetIndex >= 0
+                        ? tweets[tweetIndex]
+                        : tweets[0]
+                      : "No tweets found"}
+                  </p>
+                </motion.div>
+              </AnimatePresence>
+            </div>
           </div>
         </div>
       </motion.div>
