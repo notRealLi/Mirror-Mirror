@@ -85,10 +85,7 @@ $short-screen: "1000px";
         }
 
         &.calibrating {
-          h2 {
-            animation: blink 2.5s ease-in-out infinite;
-            animation-delay: -0.5s;
-          }
+          animation: pulse 2.5s ease-in-out infinite;
         }
 
         &.neutral {
