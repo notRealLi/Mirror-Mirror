@@ -84,6 +84,13 @@ $short-screen: "1000px";
           min-height: $min-bubble-size-small;
         }
 
+        &.calibrating {
+          h2 {
+            animation: blink 2.5s ease-in-out infinite;
+            animation-delay: -0.5s;
+          }
+        }
+
         &.neutral {
           color: $gold;
           box-shadow: 0px 0px 15px $gold;
@@ -156,6 +163,10 @@ $short-screen: "1000px";
 
       #score {
         color: $gold;
+
+        &.calibrating {
+          animation: blink 2.5s ease-in-out infinite;
+        }
 
         &.neutral {
           color: $gold;
