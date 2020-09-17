@@ -1,5 +1,4 @@
-$small-screen: "500px";
-$short-screen: "750px";
+$short-screen-header: "750px";
 
 .header {
   position: absolute;
@@ -12,7 +11,7 @@ $short-screen: "750px";
   padding: 3rem 0;
   transition: padding 0.2s;
 
-  @media (max-width: $small-screen), (max-height: $small-screen) {
+  @media (max-width: $small-screen), (max-height: $short-screen-header) {
     padding: 1.5rem 0 2.5rem 0;
   }
 
