@@ -38,8 +38,15 @@ body {
   text-align: center;
 
   p {
+    color: $gold;
+    animation: blink 2.5s ease-in-out infinite;
     word-break: break-all;
     white-space: normal;
     width: 80%;
+    font-size: 1.1rem;
+
+    @media (max-width: $small-screen) {
+      font-size: 1rem;
+    }
   }
 }
