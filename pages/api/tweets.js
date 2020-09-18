@@ -28,7 +28,6 @@ export default async (req, res) => {
 
     const resultJson = await resultRes.json();
     let tweets = [];
-    console.log("hi");
     if (resultJson.globalObjects && resultJson.globalObjects.tweets) {
       const tweetsJson = resultJson.globalObjects.tweets;
       for (const tweet in tweetsJson) {

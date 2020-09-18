@@ -45,6 +45,16 @@ const Results = ({ tweets, topic }) => {
       return res.toFixed(2);
     };
     const getSentiment = async () => {
+      if (!tweets || tweets.length === 0) {
+        setTweetsSentiment({
+          score: 0.5,
+          label: "Neutral",
+          done: true,
+        });
+
+        return;
+      }
+
       const neutralCutoff = 0.47;
       const positiveCutoff = 0.55;
       if (!tweetsSentiment.done && tweets && tweets.length > 0) {
@@ -99,7 +109,7 @@ const Results = ({ tweets, topic }) => {
         ? tweet.slice(0, MAX_TWEET_LENGTH).concat("...")
         : tweet
     );
-  }, [tweetsSentiment]);
+  }, []);
 
   return (
     <AnimatePresence exitBeforeEnter>
@@ -185,39 +195,57 @@ export const getServerSideProps = async function ({ query }) {
   const tokens = query.keywords.split(",");
   tokens[0] = `"${tokens[0]}"`;
   const utterance = tokens.join(",");
-  const witAiQueryUrl = `https://api.wit.ai/message?v=20200811&q=${utterance}`;
-  // TODO: handle no network connection on server
-  const witAiRes = await fetch(witAiQueryUrl, {
-    method: "GET",
-    headers: {
-      Authorization: "Bearer TFCWCET22RBPVMGKJQ3YDPXIWAAISCJB",
-    },
-  });
-  const witAiJson = await witAiRes.json();
+
   let topic;
-  if (witAiJson.entities["topic:topic"]) {
-    topic = witAiJson.entities["topic:topic"]
-      .map((topic) => topic.value)
-      .join(" ");
-  } else {
-    topic = query.keywords;
+  let location;
+  try {
+    const witAiQueryUrl = `https://api.wit.ai/message?v=20200811&q=${utterance}`;
+    // TODO: handle no network connection on server
+    const witAiRes = await fetch(witAiQueryUrl, {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer TFCWCET22RBPVMGKJQ3YDPXIWAAISCJB",
+      },
+    });
+    const witAiJson = await witAiRes.json();
+    if (witAiJson.entities["topic:topic"]) {
+      topic = witAiJson.entities["topic:topic"]
+        .map((topic) => topic.value)
+        .join(" ");
+    } else {
+      topic = query.keywords;
+    }
+    location = witAiJson.entities["wit$location:location"]
+      ? witAiJson.entities["wit$location:location"][0].resolved.values[0].name
+      : "N/A";
+  } catch (err) {
+    topic = topic = query.keywords;
   }
-  const location = witAiJson.entities["wit$location:location"]
-    ? witAiJson.entities["wit$location:location"][0].resolved.values[0].name
-    : "N/A";
 
-  // calling Magic Well api
-  const magicWellQueryUrl = `${process.env.MAGIC_WELL_URL}/tweets/search?keywords=${topic}&location=${location}`;
-  const magicWellRes = await fetch(magicWellQueryUrl);
-  const magicWellJson = await magicWellRes.json();
-  const tweets = magicWellJson.map((tweet) => tweet.text);
+  try {
+    // calling Magic Well api
+    const magicWellQueryUrl = `${process.env.MAGIC_WELL_URL}/tweets/search?keywords=${topic}&location=${location}`;
+    const magicWellRes = await fetch(magicWellQueryUrl);
+    const magicWellJson = await magicWellRes.json();
+    const tweets = magicWellJson.map((tweet) => tweet.text);
 
-  return {
-    props: {
-      tweets,
-      topic,
-    },
-  };
+    return {
+      props: {
+        tweets,
+        topic,
+      },
+    };
+  } catch (err) {
+    const tweetsRes = await fetch(`${process.env.HOST}/api/tweets?q=${topic}`);
+    const tweets = await tweetsRes.json();
+
+    return {
+      props: {
+        tweets,
+        topic,
+      },
+    };
+  }
 };
 
 export default withRouter(Results);
