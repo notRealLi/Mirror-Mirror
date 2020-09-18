@@ -21,9 +21,11 @@ const MyApp = ({ Component, pageProps, router }) => {
       setLoading(false);
     };
 
-    const routingError = () => {
+    const routingError = (err) => {
       setLoading(false);
-      setError(true);
+
+      // TODO: better error handling
+      if (err.code && err.code === "mirror_error") setError(true);
     };
 
     Router.events.on("routeChangeStart", routingStart);
