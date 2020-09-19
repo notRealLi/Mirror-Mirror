@@ -9,6 +9,7 @@ import {
 
 // constants
 const MAX_TWEET_LENGTH = 300;
+const MAX_TOPIC_LENGTH = 30;
 
 const Results = ({ tweets, topic }) => {
   const [tweetIndex, setTweetIndex] = useState(0);
@@ -139,7 +140,12 @@ const Results = ({ tweets, topic }) => {
           <div className="details-and-tweets-section">
             <div className="details">
               <h2>
-                Topic: <span>{`"${topic}"`}</span>
+                Topic:{" "}
+                <span>{`"${
+                  topic.length < MAX_TOPIC_LENGTH
+                    ? topic
+                    : topic.substring(0, MAX_TOPIC_LENGTH).concat("...")
+                }"`}</span>
               </h2>
               <h2>
                 Location: <span>N/A</span>
