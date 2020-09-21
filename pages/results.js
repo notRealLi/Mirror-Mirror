@@ -64,16 +64,22 @@ const Results = ({ tweets, topic }) => {
 
         for (const tweet of tweets.slice(0, 25)) {
           // TODO: Better special character filtering
-          console.log("start");
-          let query = tweet.replace(/[^\w\s]/gi, " ");
-          const sentimentRes = await fetch(`/api/sentiment?q=${query}`);
-          const sentimentJson = await sentimentRes.json();
-          console.log(sentimentJson);
-          if (sentimentJson && sentimentJson.score) {
-            score += Number(sentimentJson.score);
-            scoreCount++;
+          try {
+            console.log("start");
+            let query = tweet.replace(/[^\w\s]/gi, " ");
+            const sentimentRes = await fetch(`/api/sentiment?q=${query}`);
+            const sentimentJson = await sentimentRes.json();
+            console.log(sentimentJson);
+            if (sentimentJson && sentimentJson.score) {
+              score += Number(sentimentJson.score);
+              scoreCount++;
+            }
+            console.log("done");
+          } catch (err) {
+            console.log("error");
+            console.log(err);
+            continue;
           }
-          console.log("done");
         }
 
         score = scoreCount == 0 ? score : score / scoreCount;
