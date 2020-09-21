@@ -66,20 +66,16 @@ const Results = ({ tweets, topic }) => {
         for (const tweet of tweets.slice(0, 25)) {
           // TODO: Better special character filtering
           try {
-            console.log("start");
             let query = tweet.replace(/[^\w\s]/gi, " ");
             const sentimentRes = await axios.get(`/api/sentiment?q=${query}`, {
               timeout: 4000,
             });
             const sentimentJson = sentimentRes.data;
-            console.log(sentimentJson);
             if (sentimentJson && sentimentJson.score) {
               score += Number(sentimentJson.score);
               scoreCount++;
             }
-            console.log("done");
           } catch (err) {
-            console.log(err);
             continue;
           }
         }
