@@ -6,6 +6,7 @@ import {
   useGlobalDispatchContext,
   useGlobalStateContext,
 } from "../context/globalContext";
+import axios from "axios";
 
 // constants
 const MAX_TWEET_LENGTH = 300;
@@ -67,8 +68,10 @@ const Results = ({ tweets, topic }) => {
           try {
             console.log("start");
             let query = tweet.replace(/[^\w\s]/gi, " ");
-            const sentimentRes = await fetch(`/api/sentiment?q=${query}`);
-            const sentimentJson = await sentimentRes.json();
+            const sentimentRes = await axios.get(`/api/sentiment?q=${query}`, {
+              timeout: 5000,
+            });
+            const sentimentJson = sentimentRes.data;
             console.log(sentimentJson);
             if (sentimentJson && sentimentJson.score) {
               score += Number(sentimentJson.score);
@@ -238,7 +241,9 @@ export const getServerSideProps = async function ({ query }) {
 
   try {
     // calling Magic Well api
-    const magicWellQueryUrl = `${process.env.MAGIC_WELL_URL}/tweets/search?keywords=${topic}&location=${location}`;
+    const magicWellQueryUrl = escape(
+      `${process.env.MAGIC_WELL_URL}/tweets/search?keywords=${topic}&location=${location}`
+    );
     const magicWellRes = await fetch(magicWellQueryUrl);
     const magicWellJson = await magicWellRes.json();
     const tweets = magicWellJson.map((tweet) => tweet.text);
@@ -250,7 +255,10 @@ export const getServerSideProps = async function ({ query }) {
       },
     };
   } catch (err) {
-    const tweetsRes = await fetch(`${process.env.HOST}/api/tweets?q=${topic}`);
+    const escapedTopic = escape(topic);
+    const tweetsRes = await fetch(
+      `${process.env.HOST}/api/tweets?q=${escapedTopic}`
+    );
     const tweetsJson = await tweetsRes.json();
     const tweets = tweetsJson.map((tweet) =>
       tweet.replace(/@\S+|https?:\S+|http?:\S|[^A-Za-z0-9]+/g, " ").trim()
