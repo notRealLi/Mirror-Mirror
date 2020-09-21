@@ -69,7 +69,7 @@ const Results = ({ tweets, topic }) => {
             console.log("start");
             let query = tweet.replace(/[^\w\s]/gi, " ");
             const sentimentRes = await axios.get(`/api/sentiment?q=${query}`, {
-              timeout: 5000,
+              timeout: 4000,
             });
             const sentimentJson = sentimentRes.data;
             console.log(sentimentJson);
@@ -79,7 +79,6 @@ const Results = ({ tweets, topic }) => {
             }
             console.log("done");
           } catch (err) {
-            console.log("error");
             console.log(err);
             continue;
           }
