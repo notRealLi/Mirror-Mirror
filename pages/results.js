@@ -64,10 +64,11 @@ const Results = ({ tweets, topic, dirty }) => {
 
         for (const tweet of tweets.slice(0, 25)) {
           // TODO: Better special character filtering
-          let sentimentUrl = `/api/sentiment?q=${query}`;
-          if (dirty) sentimentUrl += "&dirty=true";
           console.log("start");
           let query = tweet.replace(/[^\w\s]/gi, " ");
+          let sentimentUrl = `/api/sentiment?q=${query}`;
+          if (dirty) sentimentUrl += "&dirty=true";
+          console.log(query);
           const sentimentRes = await fetch(sentimentUrl);
           const sentimentJson = await sentimentRes.json();
           console.log(sentimentJson);
