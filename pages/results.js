@@ -66,15 +66,16 @@ const Results = ({ tweets, topic, dirty }) => {
           // TODO: Better special character filtering
           let sentimentUrl = `/api/sentiment?q=${query}`;
           if (dirty) sentimentUrl += "&dirty=true";
-
+          console.log("start");
           let query = tweet.replace(/[^\w\s]/gi, " ");
           const sentimentRes = await fetch(sentimentUrl);
           const sentimentJson = await sentimentRes.json();
-
+          console.log(sentimentJson);
           if (sentimentJson && sentimentJson.score) {
             score += Number(sentimentJson.score);
             scoreCount++;
           }
+          console.log("done");
         }
 
         score = scoreCount == 0 ? score : score / scoreCount;
