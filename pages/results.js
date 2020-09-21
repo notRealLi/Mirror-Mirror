@@ -11,7 +11,7 @@ import {
 const MAX_TWEET_LENGTH = 300;
 const MAX_TOPIC_LENGTH = 30;
 
-const Results = ({ tweets, topic, dirty }) => {
+const Results = ({ tweets, topic }) => {
   const [tweetIndex, setTweetIndex] = useState(0);
   const [tweetsSentiment, setTweetsSentiment] = useState({
     done: false,
@@ -66,10 +66,7 @@ const Results = ({ tweets, topic, dirty }) => {
           // TODO: Better special character filtering
           console.log("start");
           let query = tweet.replace(/[^\w\s]/gi, " ");
-          let sentimentUrl = `/api/sentiment?q=${query}`;
-          if (dirty) sentimentUrl += "&dirty=true";
-          console.log(query);
-          const sentimentRes = await fetch(sentimentUrl);
+          const sentimentRes = await fetch(`/api/sentiment?q=${query}`);
           const sentimentJson = await sentimentRes.json();
           console.log(sentimentJson);
           if (sentimentJson && sentimentJson.score) {
@@ -233,9 +230,6 @@ export const getServerSideProps = async function ({ query }) {
     topic = topic = query.keywords;
   }
 
-  // if tweets are dirty (depending on API source)
-  let dirty = false;
-
   try {
     // calling Magic Well api
     const magicWellQueryUrl = `${process.env.MAGIC_WELL_URL}/tweets/search?keywords=${topic}&location=${location}`;
@@ -245,19 +239,19 @@ export const getServerSideProps = async function ({ query }) {
 
     return {
       props: {
-        dirty,
         tweets,
         topic,
       },
     };
   } catch (err) {
     const tweetsRes = await fetch(`${process.env.HOST}/api/tweets?q=${topic}`);
-    const tweets = await tweetsRes.json();
-    dirty = true;
+    const tweetsJson = await tweetsRes.json();
+    const tweets = tweetsJson.map((tweet) =>
+      tweet.replace(/@\S+|https?:\S+|http?:\S|[^A-Za-z0-9]+/g, " ").trim()
+    );
 
     return {
       props: {
-        dirty,
         tweets,
         topic,
       },
