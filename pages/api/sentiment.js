@@ -1,5 +1,6 @@
 import { google } from "googleapis";
 import fetch from "isomorphic-unfetch";
+import Cors from "cors";
 
 export const googleSentimentAnalysis = async (req, res) => {
   try {
@@ -51,7 +52,26 @@ export const googleSentimentAnalysis = async (req, res) => {
   }
 };
 
+function runMiddleware(req, res, fn) {
+  return new Promise((resolve, reject) => {
+    fn(req, res, (result) => {
+      if (result instanceof Error) {
+        return reject(result);
+      }
+
+      return resolve(result);
+    });
+  });
+}
+
+const cors = Cors({
+  methods: ["GET"],
+  origin: "https://mirror-mirror.vercel.app",
+});
+
 export default async (req, res) => {
+  await runMiddleware(req, res, cors);
+
   try {
     const content = req.query.q;
     const sentimentRes = await fetch(

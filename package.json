@@ -10,6 +10,7 @@
   "dependencies": {
     "@google-cloud/language": "^4.1.0",
     "axios": "^0.20.0",
+    "cors": "^2.8.5",
     "framer-motion": "^2.3.0",
     "googleapis": "^59.0.0",
     "isomorphic-unfetch": "^3.0.0",
