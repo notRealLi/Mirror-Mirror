@@ -12,7 +12,7 @@ import axios from "axios";
 const MAX_TWEET_LENGTH = 300;
 const MAX_TOPIC_LENGTH = 30;
 
-const Results = ({ tweets, topic }) => {
+const Results = ({ tweets, topic, record }) => {
   const [tweetIndex, setTweetIndex] = useState(0);
   const [tweetsSentiment, setTweetsSentiment] = useState({
     done: false,
@@ -46,6 +46,12 @@ const Results = ({ tweets, topic }) => {
 
       return res.toFixed(2);
     };
+
+    const saveRecord = (record, sentiment) => {
+      record.sentiment = sentiment;
+      axios.post("/api/tweets", record);
+    };
+
     const getSentiment = async () => {
       if (!tweets || tweets.length === 0) {
         setTweetsSentiment({
@@ -63,14 +69,16 @@ const Results = ({ tweets, topic }) => {
         let score = 0;
         let scoreCount = 0;
 
-        for (const tweet of tweets.slice(0, 25)) {
+        for (const tweet of tweets) {
           // TODO: Better special character filtering
           try {
             let query = tweet.replace(/[^\w\s]/gi, " ");
+
             const sentimentRes = await axios.get(`/api/sentiment?q=${query}`, {
               timeout: 4000,
             });
             const sentimentJson = sentimentRes.data;
+
             if (sentimentJson && sentimentJson.score) {
               score += Number(sentimentJson.score);
               scoreCount++;
@@ -80,18 +88,26 @@ const Results = ({ tweets, topic }) => {
           }
         }
 
-        score = scoreCount == 0 ? score : score / scoreCount;
+        score = calculateScore(
+          scoreCount == 0 ? score : score / scoreCount,
+          neutralCutoff,
+          positiveCutoff
+        );
+
+        const label =
+          score < neutralCutoff
+            ? "Negative"
+            : score < positiveCutoff
+            ? "Neutral"
+            : "Positive";
 
         setTweetsSentiment({
-          score: calculateScore(score, neutralCutoff, positiveCutoff),
-          label:
-            score < neutralCutoff
-              ? "Negative"
-              : score < positiveCutoff
-              ? "Neutral"
-              : "Positive",
+          score,
+          label,
           done: true,
         });
+
+        saveRecord(record, { score, label });
 
         // set particles color
         dispatch({
@@ -110,7 +126,7 @@ const Results = ({ tweets, topic }) => {
 
     getSentiment();
 
-    // slicing tweets
+    // slicing tweet texts
     tweets = tweets.map((tweet) =>
       tweet.length > MAX_TWEET_LENGTH
         ? tweet.slice(0, MAX_TWEET_LENGTH).concat("...")
@@ -210,6 +226,8 @@ export const getServerSideProps = async function ({ query }) {
 
   let topic;
   let location;
+  const date = new Date().toISOString();
+
   try {
     const witAiQueryUrl = `https://api.wit.ai/message?v=20200811&q=${utterance}`;
     // TODO: handle no network connection on server
@@ -234,19 +252,23 @@ export const getServerSideProps = async function ({ query }) {
     topic = topic = query.keywords;
   }
 
+  // create search record to be saved to database
+  const record = { topic, date };
+
   try {
     // calling Magic Well api
     const magicWellQueryUrl = escape(
       `${process.env.MAGIC_WELL_URL}/tweets/search?keywords=${topic}&location=${location}`
     );
     const magicWellRes = await fetch(magicWellQueryUrl);
-    const magicWellJson = await magicWellRes.json();
-    const tweets = magicWellJson.map((tweet) => tweet.text);
+    const tweetsInfo = await magicWellRes.json();
+    const tweets = tweetsInfo.map((tweet) => tweet.text);
 
     return {
       props: {
         tweets,
         topic,
+        record,
       },
     };
   } catch (err) {
@@ -254,15 +276,16 @@ export const getServerSideProps = async function ({ query }) {
     const tweetsRes = await fetch(
       `${process.env.HOST}/api/tweets?q=${escapedTopic}`
     );
-    const tweetsJson = await tweetsRes.json();
-    const tweets = tweetsJson.map((tweet) =>
-      tweet.replace(/@\S+|https?:\S+|http?:\S|[^A-Za-z0-9]+/g, " ").trim()
+    const tweetsInfo = await tweetsRes.json();
+    const tweets = tweetsInfo.map((tweet) =>
+      tweet.text.replace(/@\S+|https?:\S+|http?:\S|[^A-Za-z0-9]+/g, " ").trim()
     );
 
     return {
       props: {
         tweets,
         topic,
+        record,
       },
     };
   }
