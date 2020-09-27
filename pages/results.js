@@ -49,7 +49,10 @@ const Results = ({ tweets, topic, record }) => {
 
     const saveRecord = (record, sentiment) => {
       record.sentiment = sentiment;
-      axios.post("/api/records", { record });
+      axios
+        .post("/api/records", { record })
+        .then()
+        .catch(() => {});
     };
 
     const getSentiment = async () => {

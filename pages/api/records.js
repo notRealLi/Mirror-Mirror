@@ -17,15 +17,20 @@ export default async (req, res) => {
       res.send(JSON.stringify(err));
     }
   } else if (req.method === "POST") {
-    const { record } = req.body;
+    try {
+      const { record } = req.body;
 
-    const { db } = await connect();
-    await db.collection("records").insertOne(record);
+      const { db } = await connect();
+      await db.collection("records").insertOne(record);
 
-    res.statusCode = 200;
-    res.send({
-      sucess: true,
-    });
+      res.statusCode = 200;
+      res.send({
+        sucess: true,
+      });
+    } catch (err) {
+      res.statusCode = 500;
+      res.send(JSON.stringify(err));
+    }
   } else {
     res.statusCode = 500;
     res.send("Request method not supported.");
