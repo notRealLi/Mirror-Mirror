@@ -1,3 +1,5 @@
+import { connect } from "../../util/mongodb";
+
 export default async (req, res) => {
   if (req.method === "GET") {
     try {
@@ -48,9 +50,15 @@ export default async (req, res) => {
     }
   } else if (req.method === "POST") {
     console.log(req.body);
+    const { record } = req.body;
+
+    const { db } = await connect();
+    await db.collection("records").insertOne(record);
 
     res.statusCode = 200;
-    res.send("Success");
+    res.send({
+      sucess: true,
+    });
   } else {
     res.statusCode = 500;
     res.send("Request method not supported.");
