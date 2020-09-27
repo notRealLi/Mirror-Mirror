@@ -10,6 +10,7 @@
 ### Table of Contents
 
 - [Description](#description)
+- [Data](#data)
 - [How To Use](#how-to-use)
 - [Related Repos](#related-repos)
 - [Author Info](#author-info)
@@ -31,7 +32,13 @@ A lightweight full stack web app that performs sentiment analysis on underlined 
 
 <img src="https://raw.githubusercontent.com/notRealLi/Mirror-Mirror/master/public/diagram.png" width="600px" >
 
-#### Data For Model Training
+[Back To The Top](#mirror)
+
+---
+
+## Data
+
+#### Model Training
 
 - Datasets:
 
@@ -39,6 +46,8 @@ A lightweight full stack web app that performs sentiment analysis on underlined 
   - [The Twitter Sentiment Corpus, created by Sanders Analytics](http://www.sananalytics.com/lab/twitter-sentiment/)
 
 - Data Wrangling: [Kaggle Notebook](https://www.kaggle.com/notrealli/data-cleaning/)
+
+#### Data Pipeline (coming soon)
 
 [Back To The Top](#mirror)
 
