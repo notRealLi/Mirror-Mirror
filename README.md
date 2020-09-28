@@ -12,6 +12,7 @@
 - [Description](#description)
 - [Data](#data)
 - [How To Use](#how-to-use)
+- [Feature Backlog](#feature-backlog)
 - [Related Repos](#related-repos)
 - [Author Info](#author-info)
 
@@ -58,6 +59,14 @@ A lightweight full stack web app that performs sentiment analysis on underlined 
 On the [homepage](https://mirror-mirror.vercel.app/) of the app, enter any topic you'd like. The general sentiment and most recent tweets about the topic will be shown.
 
 More functionalities on the way...
+
+[Back To The Top](#mirror)
+
+---
+
+## Feature Backlog
+
+Trello Board: [link](https://trello.com/b/PGZmlriF/mirror-mirror)
 
 [Back To The Top](#mirror)
 
