@@ -48,7 +48,9 @@ A lightweight full stack web app that performs sentiment analysis on underlined 
 
 - Data Wrangling: [Kaggle Notebook](https://www.kaggle.com/notrealli/data-cleaning/)
 
-#### Data Pipeline (coming soon)
+#### Data Pipeline 📈📊
+
+- Kaggle Notebook: [Through The Looking Glass](https://www.kaggle.com/notrealli/through-the-looking-glass)
 
 [Back To The Top](#mirror)
 
@@ -66,7 +68,7 @@ More functionalities on the way...
 
 ## Feature Backlog
 
-Trello Board: [link](https://trello.com/b/PGZmlriF/mirror-mirror)
+- Trello Board: [link](https://trello.com/b/PGZmlriF/mirror-mirror)
 
 [Back To The Top](#mirror)
 
