@@ -13,7 +13,6 @@
 - [Data](#data)
 - [How To Use](#how-to-use)
 - [Feature Backlog](#feature-backlog)
-- [Related Repos](#related-repos)
 - [Author Info](#author-info)
 
 ---
@@ -69,14 +68,6 @@ More functionalities on the way...
 ## Feature Backlog
 
 - Trello Board: [link](https://trello.com/b/PGZmlriF/mirror-mirror)
-
-[Back To The Top](#mirror)
-
----
-
-## Related Repos
-
-- [Magic Well](https://github.com/notRealLi/Magic-Well): An API that provides a number of functionalities including fetching tweets from Twitter and performing sentiment evaluaction on texts.
 
 [Back To The Top](#mirror)
 
