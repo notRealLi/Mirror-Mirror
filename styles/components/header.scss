@@ -22,44 +22,55 @@ $short-screen-header: "750px";
     justify-content: space-between;
     align-items: center;
 
-    .logo {
-      a {
+    a {
+      text-decoration: none;
+
+      &:focus {
+        -webkit-tap-highlight-color: transparent;
+        // TODO: add effect
+      }
+
+      h2 {
         font-size: 2rem;
         font-weight: 400;
-        text-decoration: none;
         color: $white;
-        text-shadow: 10px 10px $white-shadow;
+        text-shadow: 0 0 10px #fff;
         transition: font-size 0.2s;
+        -webkit-box-reflect: below 1px linear-gradient(transparent, #0004);
+        line-height: 0.8em;
+
+        .active {
+          animation: tubelight-active 5s infinite;
+        }
+
+        .lazy {
+          animation: tubelight-lazy 4s infinite;
+        }
 
         @include media("<=400px") {
           font-size: 1.5rem;
         }
-
-        &:focus {
-          -webkit-tap-highlight-color: transparent;
-          // TODO: add effect
-        }
       }
     }
-
-    // .nav-toggle {
-    //   display: flex;
-    //   justify-content: center;
-    //   align-items: center;
-    //   position: relative;
-    //   cursor: pointer;
-
-    //   .nav-menu {
-    //     width: 25px;
-    //     span {
-    //       display: block;
-
-    //       height: 3px;
-    //       width: 100%;
-    //       background: $white;
-    //       margin-bottom: 0.3rem;
-    //     }
-    //   }
-    // }
   }
+
+  // .nav-toggle {
+  //   display: flex;
+  //   justify-content: center;
+  //   align-items: center;
+  //   position: relative;
+  //   cursor: pointer;
+
+  //   .nav-menu {
+  //     width: 25px;
+  //     span {
+  //       display: block;
+
+  //       height: 3px;
+  //       width: 100%;
+  //       background: $white;
+  //       margin-bottom: 0.3rem;
+  //     }
+  //   }
+  // }
 }
