@@ -14,6 +14,8 @@ $medium-screen: "1200px";
 $small-screen: "500px";
 $short-screen: "1000px";
 
+$light-xxl: 50px;
+
 @keyframes float {
   0% {
     transform: translateY(0);
@@ -69,21 +71,23 @@ $short-screen: "1000px";
   90.1%,
   92.1%,
   100% {
-    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 40px #fff, 0 0 80px #fff,
-      0 0 100px #fff;
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 40px #fff,
+      0 0 $light-xxl #fff;
   }
 }
 
 @keyframes tubelight-lazy {
   0%,
+  90%,
   92% {
-    color: #fff;
-    text-shadow: 0 0 10px #fff;
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 40px #fff,
+      0 0 $light-xxl #fff;
   }
 
+  90.1%,
   92.1%,
   100% {
-    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 40px #fff, 0 0 80px #fff,
-      0 0 100px #fff;
+    color: #fff;
+    text-shadow: 0 0 5px #fff;
   }
 }
