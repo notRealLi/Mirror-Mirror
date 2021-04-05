@@ -12,7 +12,7 @@ import axios from "axios";
 const MAX_TWEET_LENGTH = 300;
 const MAX_TOPIC_LENGTH = 30;
 
-const Results = ({ tweets, topic, record }) => {
+const Results = ({ tweets, topic, record, location }) => {
   const [tweetIndex, setTweetIndex] = useState(0);
   const [tweetsSentiment, setTweetsSentiment] = useState({
     done: false,
@@ -169,7 +169,7 @@ const Results = ({ tweets, topic, record }) => {
                 }"`}</span>
               </h2>
               <h2>
-                Location: <span>N/A</span>
+                Location: <span>{location}</span>
               </h2>
               <h2>
                 Recency: <span>N/A</span>
@@ -268,6 +268,7 @@ export const getServerSideProps = async function ({ query }) {
         tweets,
         topic,
         record,
+        location,
       },
     };
   } catch (err) {
@@ -285,6 +286,7 @@ export const getServerSideProps = async function ({ query }) {
         tweets,
         topic,
         record,
+        location,
       },
     };
   }
