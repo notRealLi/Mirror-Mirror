@@ -98,7 +98,11 @@ const Results = ({ tweets, topic, record, location }) => {
         );
 
         const label =
-          score <= 0.33 ? "Negative" : score <= 0.66 ? "Neutral" : "Positive";
+          score < neutralCutoff
+            ? "Negative"
+            : score <= positiveCutoff
+            ? "Neutral"
+            : "Positive";
 
         setTweetsSentiment({
           score,
