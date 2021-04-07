@@ -66,8 +66,8 @@ const Results = ({ tweets, topic, record, location }) => {
         return;
       }
 
-      const neutralCutoff = 0.47;
-      const positiveCutoff = 0.55;
+      const neutralCutoff = 0.5;
+      const positiveCutoff = 0.66;
       if (!tweetsSentiment.done && tweets && tweets.length > 0) {
         let score = 0;
         let scoreCount = 0;
